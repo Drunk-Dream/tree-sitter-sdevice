@@ -1,0 +1,36 @@
+[tool.bumpversion]
+current_version = "0.0.1"
+commit = false
+tag = false
+allow_dirty = true
+message = "chore(release): version {current_version} -> {new_version}"
+
+[[tool.bumpversion.files]]
+filename = "CMakeLists.txt"
+search = 'VERSION "{current_version}"'
+replace = 'VERSION "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "Cargo.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "Makefile"
+search = 'VERSION := {current_version}'
+replace = 'VERSION := {new_version}'
+
+[[tool.bumpversion.files]]
+filename = "package.json"
+search = '"version": "{current_version}"'
+replace = '"version": "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "tree-sitter.json"
+search = '"version": "{current_version}"'
+replace = '"version": "{new_version}"'
