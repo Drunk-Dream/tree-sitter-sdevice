@@ -2,28 +2,20 @@
 Expr
 ===================
 
-1 + 1
-x + 2
-3 + y
-x + y
+#define x @<1 + 1>@
+#define x @<x + 2>@
+#define x @<3 + y>@
+#define x @<x + y>@
 
-(x + y) + z
+#define x @<(x + y) + z>@
+#define x @<@x@ == y>@
 
 ---
+
 (source_file
-      (expr
-        (binop_expr
-          (number)
-          (number)))
-      (expr
-        (binop_expr
-          (identifier)
-          (number)))
-      (expr
-        (binop_expr
-          (number)
-          (identifier)))
-      (expr
-        (binop_expr
-          (identifier)
-          (identifier))))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment))

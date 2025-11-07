@@ -1,0 +1,14 @@
+[
+  {
+    "label": "Parse Current File",
+    "command": "tree-sitter generate; tree-sitter parse $ZED_FILE"
+  },
+  {
+    "label": "Tests",
+    "command": "tree-sitter generate; tree-sitter test"
+  },
+  {
+    "label": "Tests Update",
+    "command": "tree-sitter generate; tree-sitter test -u"
+  }
+]

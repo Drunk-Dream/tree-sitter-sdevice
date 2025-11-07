@@ -27,29 +27,37 @@ const PREC = {
 
 module.exports = grammar({
   name: "sdevice",
-  extras: ($) => [$._whitespace],
+  extras: ($) => [$._whitespace, $.comment],
 
   rules: {
     // TODO: add the actual grammar rules
     source_file: ($) => repeat($._statement),
 
-    _statement: ($) => choice($.define_micro, $.undefine_micro, $.expr),
+    _statement: ($) => choice($.sharp_command, $.comment),
+
+    sharp_command: ($) =>
+      prec(10, choice($.define_micro, $.undefine_macro, $.set_dep)),
 
     define_micro: ($) =>
-      prec(
-        10,
-        seq(
-          "#define",
-          field("name", $.identifier),
-          field(
-            "value",
-            choice($.at_reference, $.number, $.boolean, $.identifier, $.string),
+      seq(
+        "#define",
+        field("name", $.identifier),
+        field(
+          "value",
+          choice(
+            $.at_reference,
+            $.number,
+            $.boolean,
+            $.identifier,
+            $.string,
+            $.at_angle_expression,
           ),
         ),
       ),
-    undefine_micro: ($) => prec(10, seq("#undef", field("name", $.identifier))),
+    undefine_macro: ($) => prec(10, seq("#undef", field("name", $.identifier))),
+    set_dep: ($) => seq("#setdep", $.at_reference),
 
-    expr: ($) => $._expr,
+    at_angle_expression: ($) => seq("@<", $._expr, ">@"),
 
     _expr: ($) =>
       choice(
@@ -89,7 +97,6 @@ module.exports = grammar({
     ternary_expr: ($) =>
       prec.left(PREC.ternary, seq($._expr, "?", $._expr, ":", $._expr)),
 
-    at_reference: ($) => prec(10, seq("@", $.identifier, "@")),
     number: (_) => {
       const hexLiteral = seq(choice("0x", "0X"), /[\da-fA-F](_?[\da-fA-F])*/);
 
@@ -140,6 +147,7 @@ module.exports = grammar({
     boolean: (_) => choice("1", "0", /true/i, /false/i),
 
     // string
+    // BUG: 不能匹配独立出现的"@"符号
     string: ($) =>
       choice(
         seq(
@@ -184,6 +192,14 @@ module.exports = grammar({
         ),
       ),
 
+    at_reference: (_) =>
+      seq(
+        "@",
+        repeat(
+          /[^\x00-\x1F\s\p{Zs}:;`"'@#.,^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B\u2028\u2029]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/u,
+        ),
+        "@",
+      ),
     identifier: (_) => {
       const alpha =
         /[^\x00-\x1F\s\p{Zs}0-9:;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B\u2028\u2029]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/u;
@@ -192,6 +208,7 @@ module.exports = grammar({
         /[^\x00-\x1F\s\p{Zs}:;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B\u2028\u2029]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/u;
       return token(seq(alpha, repeat(alphanumeric)));
     },
+    comment: (_) => /#[^\r\n]+/,
     _whitespace: (_) => token(/\s+/),
   },
 });

@@ -1,6 +1,6 @@
 [
   {
-    "type": "at_reference",
+    "type": "at_angle_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -8,11 +8,40 @@
       "required": true,
       "types": [
         {
+          "type": "at_reference",
+          "named": true
+        },
+        {
+          "type": "binop_expr",
+          "named": true
+        },
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "ternary_expr",
+          "named": true
+        },
+        {
+          "type": "unary_expr",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "at_reference",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "binop_expr",
@@ -77,6 +106,10 @@
         "required": true,
         "types": [
           {
+            "type": "at_angle_expression",
+            "named": true
+          },
+          {
             "type": "at_reference",
             "named": true
           },
@@ -101,7 +134,7 @@
     }
   },
   {
-    "type": "expr",
+    "type": "setdep",
     "named": true,
     "fields": {},
     "children": {
@@ -111,29 +144,28 @@
         {
           "type": "at_reference",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "sharp_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
         {
-          "type": "binop_expr",
+          "type": "define_micro",
           "named": true
         },
         {
-          "type": "escape_sequence",
+          "type": "setdep",
           "named": true
         },
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "ternary_expr",
-          "named": true
-        },
-        {
-          "type": "unary_expr",
+          "type": "undefine_micro",
           "named": true
         }
       ]
@@ -149,15 +181,11 @@
       "required": false,
       "types": [
         {
-          "type": "define_micro",
+          "type": "comment",
           "named": true
         },
         {
-          "type": "expr",
-          "named": true
-        },
-        {
-          "type": "undefine_micro",
+          "type": "sharp_command",
           "named": true
         }
       ]
@@ -297,6 +325,10 @@
     "named": false
   },
   {
+    "type": "#setdep",
+    "named": false
+  },
+  {
     "type": "#undef",
     "named": false
   },
@@ -385,6 +417,10 @@
     "named": false
   },
   {
+    "type": ">@",
+    "named": false
+  },
+  {
     "type": "?",
     "named": false
   },
@@ -393,8 +429,16 @@
     "named": false
   },
   {
+    "type": "@<",
+    "named": false
+  },
+  {
     "type": "^",
     "named": false
+  },
+  {
+    "type": "comment",
+    "named": true
   },
   {
     "type": "eq",

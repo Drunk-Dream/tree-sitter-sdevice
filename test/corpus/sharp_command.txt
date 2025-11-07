@@ -6,38 +6,62 @@ Define Micro
 #define _dt_    2.0e-4
 #define _trise_ false
 #define _test_  true
-#define _at_reference_ @test@
+#define _at_reference_ @node|test@
 #define _test_string_ "test"
 #define _test_string_ "@test@"
-#undef _Vpass_
 
 ---
 
 (source_file
-  (define_micro
-    name: (identifier)
-    value: (number))
-  (define_micro
-    name: (identifier)
-    value: (number))
-  (define_micro
-    name: (identifier)
-    value: (boolean))
-  (define_micro
-    name: (identifier)
-    value: (boolean))
-  (define_micro
-    name: (identifier)
-    value: (at_reference
-      (identifier)))
-  (define_micro
-    name: (identifier)
-    value: (string
-      (string_fragment)))
-  (define_micro
-    name: (identifier)
-    value: (string
-      (at_reference
-        (identifier))))
-  (undefine_micro
-    name: (identifier)))
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment))
+
+===================
+Undefine Micro
+===================
+
+#undef _Vpass_
+#undef _dt_
+#undef _trise_
+#undef _test_
+#undef _at_reference_
+#undef _test_string_
+#undef _test_string_
+
+---
+
+(source_file
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment)
+  (comment))
+
+===================
+Set Dependency
+===================
+
+#setdep @node|test@
+
+---
+
+(source_file
+  (comment))
+
+===================
+Comment
+===================
+
+#test
+
+---
+
+(source_file
+  (comment))
