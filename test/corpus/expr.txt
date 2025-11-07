@@ -1,0 +1,29 @@
+===================
+Expr
+===================
+
+1 + 1
+x + 2
+3 + y
+x + y
+
+(x + y) + z
+
+---
+(source_file
+      (expr
+        (binop_expr
+          (number)
+          (number)))
+      (expr
+        (binop_expr
+          (identifier)
+          (number)))
+      (expr
+        (binop_expr
+          (number)
+          (identifier)))
+      (expr
+        (binop_expr
+          (identifier)
+          (identifier))))

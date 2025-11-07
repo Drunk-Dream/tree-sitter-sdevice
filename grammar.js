@@ -33,7 +33,7 @@ module.exports = grammar({
     // TODO: add the actual grammar rules
     source_file: ($) => repeat($._statement),
 
-    _statement: ($) => choice($.define_micro, $.undefine_micro),
+    _statement: ($) => choice($.define_micro, $.undefine_micro, $.expr),
 
     define_micro: ($) =>
       prec(
@@ -48,6 +48,46 @@ module.exports = grammar({
         ),
       ),
     undefine_micro: ($) => prec(10, seq("#undef", field("name", $.identifier))),
+
+    expr: ($) => $._expr,
+
+    _expr: ($) =>
+      choice(
+        $.unary_expr,
+        $.binop_expr,
+        $.ternary_expr,
+        $.escape_sequence,
+        seq("(", $._expr, ")"),
+        $.number,
+        $.identifier,
+        $.at_reference,
+      ),
+
+    unary_expr: ($) =>
+      prec.left(PREC.unary, seq(choice("-", "+", "~", "!"), $._expr)),
+
+    binop_expr: ($) =>
+      choice(
+        prec.left(PREC.exp, seq($._expr, "**", $._expr)),
+        prec.left(PREC.muldiv, seq($._expr, choice("/", "*", "%"), $._expr)),
+        prec.left(PREC.addsub, seq($._expr, choice("+", "-"), $._expr)),
+        prec.left(PREC.shift, seq($._expr, choice("<<", ">>"), $._expr)),
+        prec.left(
+          PREC.compare,
+          seq($._expr, choice(">", "<", ">=", "<="), $._expr),
+        ),
+        prec.left(PREC.equal_bool, seq($._expr, choice("==", "!="), $._expr)),
+        prec.left(PREC.equal_string, seq($._expr, choice("eq", "ne"), $._expr)),
+        prec.left(PREC.contain, seq($._expr, choice("in", "ni"), $._expr)),
+        prec.left(PREC.and_bit, seq($._expr, "&", $._expr)),
+        prec.left(PREC.xor_bit, seq($._expr, "^", $._expr)),
+        prec.left(PREC.or_bit, seq($._expr, "|", $._expr)),
+        prec.left(PREC.and_logical, seq($._expr, "&&", $._expr)),
+        prec.left(PREC.or_logical, seq($._expr, "||", $._expr)),
+      ),
+
+    ternary_expr: ($) =>
+      prec.left(PREC.ternary, seq($._expr, "?", $._expr, ":", $._expr)),
 
     at_reference: ($) => prec(10, seq("@", $.identifier, "@")),
     number: (_) => {
