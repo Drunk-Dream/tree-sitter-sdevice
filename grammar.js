@@ -27,7 +27,16 @@ const PREC = {
 
 module.exports = grammar({
   name: "sdevice",
-  extras: ($) => [$._whitespace, $.comment],
+  externals: ($) => [
+    $._sharp_define,
+    $._sharp_undef,
+    $._sharp_setdep,
+    $._sharp_if,
+    $._sharp_elif,
+    $._sharp_endif,
+    $.comment, // 外部扫描器处理的注释
+  ],
+  extras: ($) => [$._whitespace], // 仅保留空白作为 extras
 
   rules: {
     // TODO: add the actual grammar rules
@@ -36,11 +45,20 @@ module.exports = grammar({
     _statement: ($) => choice($.sharp_command, $.comment),
 
     sharp_command: ($) =>
-      prec(10, choice($.define_micro, $.undefine_macro, $.set_dep)),
+      prec(
+        10,
+        choice(
+          $.define_micro,
+          $.undefine_macro,
+          $.set_dep,
+          $.if_command, // 添加 if_command
+          $.endif_command, // 添加 endif_command
+        ),
+      ),
 
     define_micro: ($) =>
       seq(
-        "#define",
+        $._sharp_define, // 使用外部扫描器生成的 token
         field("name", $.identifier),
         field(
           "value",
@@ -54,10 +72,18 @@ module.exports = grammar({
           ),
         ),
       ),
-    undefine_macro: ($) => prec(10, seq("#undef", field("name", $.identifier))),
-    set_dep: ($) => seq("#setdep", $.at_reference),
+    undefine_macro: ($) => seq($._sharp_undef, field("name", $.identifier)), // 使用外部扫描器生成的 token
+    set_dep: ($) => seq($._sharp_setdep, $.at_reference), // 使用外部扫描器生成的 token
+    if_command: ($) =>
+      seq(
+        choice($._sharp_if, $._sharp_elif), // 使用外部扫描器生成的 token
+        field("condition", $.expr),
+      ),
+    endif_command: ($) => $._sharp_endif, // 使用外部扫描器生成的 token
 
     at_angle_expression: ($) => seq("@<", $._expr, ">@"),
+
+    expr: ($) => $._expr,
 
     _expr: ($) =>
       choice(
@@ -69,6 +95,7 @@ module.exports = grammar({
         $.number,
         $.identifier,
         $.at_reference,
+        $.string,
       ),
 
     unary_expr: ($) =>
@@ -208,7 +235,6 @@ module.exports = grammar({
         /[^\x00-\x1F\s\p{Zs}:;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B\u2028\u2029]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/u;
       return token(seq(alpha, repeat(alphanumeric)));
     },
-    comment: (_) => /#[^\r\n]+/,
     _whitespace: (_) => token(/\s+/),
   },
 });

@@ -34,11 +34,19 @@
           },
           {
             "type": "SYMBOL",
-            "name": "undefine_micro"
+            "name": "undefine_macro"
           },
           {
             "type": "SYMBOL",
-            "name": "setdep"
+            "name": "set_dep"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "if_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "endif_command"
           }
         ]
       }
@@ -47,8 +55,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "#define"
+          "type": "SYMBOL",
+          "name": "_sharp_define"
         },
         {
           "type": "FIELD",
@@ -93,39 +101,65 @@
         }
       ]
     },
-    "undefine_micro": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "#undef"
-          },
-          {
-            "type": "FIELD",
-            "name": "name",
-            "content": {
-              "type": "SYMBOL",
-              "name": "identifier"
-            }
-          }
-        ]
-      }
-    },
-    "setdep": {
+    "undefine_macro": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "#setdep"
+          "type": "SYMBOL",
+          "name": "_sharp_undef"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        }
+      ]
+    },
+    "set_dep": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sharp_setdep"
         },
         {
           "type": "SYMBOL",
           "name": "at_reference"
         }
       ]
+    },
+    "if_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_sharp_if"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_sharp_elif"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "condition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expr"
+          }
+        }
+      ]
+    },
+    "endif_command": {
+      "type": "SYMBOL",
+      "name": "_sharp_endif"
     },
     "at_angle_expression": {
       "type": "SEQ",
@@ -143,6 +177,10 @@
           "value": ">@"
         }
       ]
+    },
+    "expr": {
+      "type": "SYMBOL",
+      "name": "_expr"
     },
     "_expr": {
       "type": "CHOICE",
@@ -191,6 +229,10 @@
         {
           "type": "SYMBOL",
           "name": "at_reference"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
         }
       ]
     },
@@ -1303,10 +1345,6 @@
         ]
       }
     },
-    "comment": {
-      "type": "PATTERN",
-      "value": "#[^\\r\\n]+"
-    },
     "_whitespace": {
       "type": "TOKEN",
       "content": {
@@ -1323,7 +1361,36 @@
   ],
   "conflicts": [],
   "precedences": [],
-  "externals": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "_sharp_define"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_sharp_undef"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_sharp_setdep"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_sharp_if"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_sharp_elif"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_sharp_endif"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "comment"
+    }
+  ],
   "inline": [],
   "supertypes": [],
   "reserved": {}

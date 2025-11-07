@@ -13,13 +13,36 @@ Define Micro
 ---
 
 (source_file
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment))
+  (sharp_command
+    (define_micro
+      (identifier)
+      (number)))
+  (sharp_command
+    (define_micro
+      (identifier)
+      (number)))
+  (sharp_command
+    (define_micro
+      (identifier)
+      (boolean)))
+  (sharp_command
+    (define_micro
+      (identifier)
+      (boolean)))
+  (sharp_command
+    (define_micro
+      (identifier)
+      (at_reference)))
+  (sharp_command
+    (define_micro
+      (identifier)
+      (string
+        (string_fragment))))
+  (sharp_command
+    (define_micro
+      (identifier)
+      (string
+        (at_reference)))))
 
 ===================
 Undefine Micro
@@ -31,17 +54,32 @@ Undefine Micro
 #undef _test_
 #undef _at_reference_
 #undef _test_string_
-#undef _test_string_
+#undef _test_string_ #comment
 
 ---
 
 (source_file
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
-  (comment)
+  (sharp_command
+    (undefine_macro
+      (identifier)))
+  (sharp_command
+    (undefine_macro
+      (identifier)))
+  (sharp_command
+    (undefine_macro
+      (identifier)))
+  (sharp_command
+    (undefine_macro
+      (identifier)))
+  (sharp_command
+    (undefine_macro
+      (identifier)))
+  (sharp_command
+    (undefine_macro
+      (identifier)))
+  (sharp_command
+    (undefine_macro
+      (identifier)))
   (comment))
 
 ===================
@@ -53,7 +91,9 @@ Set Dependency
 ---
 
 (source_file
-  (comment))
+  (sharp_command
+    (set_dep
+      (at_reference))))
 
 ===================
 Comment
@@ -65,3 +105,38 @@ Comment
 
 (source_file
   (comment))
+
+===================
+If
+===================
+
+#if @test@ == "1"
+#elif @test@ == 2
+#elif @test@ == "@test@"
+#endif
+
+---
+
+(source_file
+  (sharp_command
+    (if_command
+      (expr
+        (binop_expr
+          (at_reference)
+          (string
+            (string_fragment))))))
+  (sharp_command
+    (if_command
+      (expr
+        (binop_expr
+          (at_reference)
+          (number)))))
+  (sharp_command
+    (if_command
+      (expr
+        (binop_expr
+          (at_reference)
+          (string
+            (at_reference))))))
+  (sharp_command
+    (endif_command)))

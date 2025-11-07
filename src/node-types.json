@@ -28,6 +28,10 @@
           "named": true
         },
         {
+          "type": "string",
+          "named": true
+        },
+        {
           "type": "ternary_expr",
           "named": true
         },
@@ -69,6 +73,10 @@
         },
         {
           "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         },
         {
@@ -134,7 +142,71 @@
     }
   },
   {
-    "type": "setdep",
+    "type": "endif_command",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "expr",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "at_reference",
+          "named": true
+        },
+        {
+          "type": "binop_expr",
+          "named": true
+        },
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "ternary_expr",
+          "named": true
+        },
+        {
+          "type": "unary_expr",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "if_command",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "set_dep",
     "named": true,
     "fields": {},
     "children": {
@@ -161,11 +233,19 @@
           "named": true
         },
         {
-          "type": "setdep",
+          "type": "endif_command",
           "named": true
         },
         {
-          "type": "undefine_micro",
+          "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "set_dep",
+          "named": true
+        },
+        {
+          "type": "undefine_macro",
           "named": true
         }
       ]
@@ -243,6 +323,10 @@
           "named": true
         },
         {
+          "type": "string",
+          "named": true
+        },
+        {
           "type": "ternary_expr",
           "named": true
         },
@@ -282,6 +366,10 @@
           "named": true
         },
         {
+          "type": "string",
+          "named": true
+        },
+        {
           "type": "ternary_expr",
           "named": true
         },
@@ -293,7 +381,7 @@
     }
   },
   {
-    "type": "undefine_micro",
+    "type": "undefine_macro",
     "named": true,
     "fields": {
       "name": {
@@ -318,18 +406,6 @@
   },
   {
     "type": "\"",
-    "named": false
-  },
-  {
-    "type": "#define",
-    "named": false
-  },
-  {
-    "type": "#setdep",
-    "named": false
-  },
-  {
-    "type": "#undef",
     "named": false
   },
   {
