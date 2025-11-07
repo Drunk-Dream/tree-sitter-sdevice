@@ -52,6 +52,10 @@
           {
             "type": "number",
             "named": true
+          },
+          {
+            "type": "string",
+            "named": true
           }
         ]
       }
@@ -69,12 +73,67 @@
         {
           "type": "define_micro",
           "named": true
+        },
+        {
+          "type": "undefine_micro",
+          "named": true
         }
       ]
     }
   },
   {
+    "type": "string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "at_reference",
+          "named": true
+        },
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "string_fragment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "undefine_micro",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "#define",
+    "named": false
+  },
+  {
+    "type": "#undef",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {
@@ -90,11 +149,19 @@
     "named": false
   },
   {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
     "type": "identifier",
     "named": true
   },
   {
     "type": "number",
+    "named": true
+  },
+  {
+    "type": "string_fragment",
     "named": true
   }
 ]

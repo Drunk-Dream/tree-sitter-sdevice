@@ -1,0 +1,43 @@
+===================
+Define Micro
+===================
+
+#define _Vpass_ 8.0
+#define _dt_    2.0e-4
+#define _trise_ false
+#define _test_  true
+#define _at_reference_ @test@
+#define _test_string_ "test"
+#define _test_string_ "@test@"
+#undef _Vpass_
+
+---
+
+(source_file
+  (define_micro
+    name: (identifier)
+    value: (number))
+  (define_micro
+    name: (identifier)
+    value: (number))
+  (define_micro
+    name: (identifier)
+    value: (boolean))
+  (define_micro
+    name: (identifier)
+    value: (boolean))
+  (define_micro
+    name: (identifier)
+    value: (at_reference
+      (identifier)))
+  (define_micro
+    name: (identifier)
+    value: (string
+      (string_fragment)))
+  (define_micro
+    name: (identifier)
+    value: (string
+      (at_reference
+        (identifier))))
+  (undefine_micro
+    name: (identifier)))

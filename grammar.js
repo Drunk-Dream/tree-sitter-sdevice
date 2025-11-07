@@ -33,19 +33,23 @@ module.exports = grammar({
     // TODO: add the actual grammar rules
     source_file: ($) => repeat($._statement),
 
-    _statement: ($) => choice($.define_micro),
+    _statement: ($) => choice($.define_micro, $.undefine_micro),
 
     define_micro: ($) =>
-      seq(
-        "#define",
-        field("name", $.identifier),
-        field(
-          "value",
-          choice($.at_reference, $.number, $.boolean, $.identifier),
+      prec(
+        10,
+        seq(
+          "#define",
+          field("name", $.identifier),
+          field(
+            "value",
+            choice($.at_reference, $.number, $.boolean, $.identifier, $.string),
+          ),
         ),
       ),
+    undefine_micro: ($) => prec(10, seq("#undef", field("name", $.identifier))),
 
-    at_reference: ($) => seq("@", $.identifier, "@"),
+    at_reference: ($) => prec(10, seq("@", $.identifier, "@")),
     number: (_) => {
       const hexLiteral = seq(choice("0x", "0X"), /[\da-fA-F](_?[\da-fA-F])*/);
 
@@ -94,6 +98,52 @@ module.exports = grammar({
       );
     },
     boolean: (_) => choice("1", "0", /true/i, /false/i),
+
+    // string
+    string: ($) =>
+      choice(
+        seq(
+          '"',
+          repeat(
+            choice(
+              alias($.unescaped_double_string_fragment, $.string_fragment),
+              $.escape_sequence,
+              $.at_reference,
+            ),
+          ),
+          '"',
+        ),
+        seq(
+          "'",
+          repeat(
+            choice(
+              alias($.unescaped_single_string_fragment, $.string_fragment),
+              $.escape_sequence,
+              $.at_reference,
+            ),
+          ),
+          "'",
+        ),
+      ),
+    unescaped_double_string_fragment: (_) =>
+      token.immediate(prec(1, /[^"\\\r\n@]+/)),
+    unescaped_single_string_fragment: (_) =>
+      token.immediate(prec(1, /[^'\\\r\n@]+/)),
+    escape_sequence: (_) =>
+      token.immediate(
+        seq(
+          "\\",
+          choice(
+            /[^xu0-7]/,
+            /[0-7]{1,3}/,
+            /x[0-9a-fA-F]{2}/,
+            /u[0-9a-fA-F]{4}/,
+            /u\{[0-9a-fA-F]+\}/,
+            /[\r?][\n\u2028\u2029]/,
+          ),
+        ),
+      ),
+
     identifier: (_) => {
       const alpha =
         /[^\x00-\x1F\s\p{Zs}0-9:;`"'@#.,|^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B\u2028\u2029]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/u;
@@ -105,3 +155,25 @@ module.exports = grammar({
     _whitespace: (_) => token(/\s+/),
   },
 });
+
+/**
+ * Creates a rule to match one or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @returns {SeqRule}
+ */
+function commaSep1(rule) {
+  return seq(rule, repeat(seq(",", rule)));
+}
+
+/**
+ * Creates a rule to optionally match one or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @returns {ChoiceRule}
+ */
+function commaSep(rule) {
+  return optional(commaSep1(rule));
+}
