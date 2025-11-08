@@ -145,32 +145,6 @@
     }
   },
   {
-    "type": "elif_command",
-    "named": true,
-    "fields": {
-      "condition": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expr",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "else_command",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "endif_command",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "expr",
     "named": true,
     "fields": {},
@@ -218,19 +192,62 @@
     }
   },
   {
-    "type": "if_command",
+    "type": "file_section_member",
     "named": true,
     "fields": {
-      "condition": {
+      "type": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
-            "type": "expr",
+            "type": "file_section_key_with_value",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
             "named": true
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "file_section_flag_keyword",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "file_section_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "file_section_member",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -249,18 +266,13 @@
     }
   },
   {
-    "type": "source_file",
+    "type": "sharp_command_statement",
     "named": true,
-    "root": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
         {
           "type": "define_micro",
           "named": true
@@ -270,11 +282,31 @@
           "named": true
         },
         {
-          "type": "top_sharp_if_block",
+          "type": "undefine_macro",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "root": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "file_section_statement",
           "named": true
         },
         {
-          "type": "undefine_macro",
+          "type": "sharp_command_statement",
+          "named": true
+        },
+        {
+          "type": "top_sharp_if_statement",
           "named": true
         }
       ]
@@ -351,34 +383,109 @@
     }
   },
   {
-    "type": "top_sharp_if_block",
+    "type": "top_sharp_elif_clause",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "elif_command",
-          "named": true
-        },
-        {
-          "type": "else_command",
-          "named": true
-        },
-        {
-          "type": "endif_command",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        }
-      ]
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_section_statement",
+            "named": true
+          },
+          {
+            "type": "sharp_command_statement",
+            "named": true
+          },
+          {
+            "type": "top_sharp_if_statement",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "top_sharp_else_clause",
+    "named": true,
+    "fields": {
+      "consequence": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_section_statement",
+            "named": true
+          },
+          {
+            "type": "sharp_command_statement",
+            "named": true
+          },
+          {
+            "type": "top_sharp_if_statement",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "top_sharp_if_statement",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "top_sharp_elif_clause",
+            "named": true
+          },
+          {
+            "type": "top_sharp_else_clause",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          }
+        ]
+      },
+      "consequence": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "file_section_statement",
+            "named": true
+          },
+          {
+            "type": "sharp_command_statement",
+            "named": true
+          },
+          {
+            "type": "top_sharp_if_statement",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -525,6 +632,10 @@
     "named": false
   },
   {
+    "type": "=",
+    "named": false
+  },
+  {
     "type": "==",
     "named": false
   },
@@ -574,6 +685,14 @@
     "named": true
   },
   {
+    "type": "file_section_flag_keyword",
+    "named": true
+  },
+  {
+    "type": "file_section_key_with_value",
+    "named": true
+  },
+  {
     "type": "identifier",
     "named": true
   },
@@ -598,11 +717,19 @@
     "named": true
   },
   {
+    "type": "{",
+    "named": false
+  },
+  {
     "type": "|",
     "named": false
   },
   {
     "type": "||",
+    "named": false
+  },
+  {
+    "type": "}",
     "named": false
   },
   {

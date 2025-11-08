@@ -5,10 +5,10 @@
   },
   {
     "label": "Tests",
-    "command": "tree-sitter generate; tree-sitter test"
+    "command": "tree-sitter generate; tree-sitter test --show-fields"
   },
   {
     "label": "Tests Update",
-    "command": "tree-sitter generate; tree-sitter test -u"
+    "command": "tree-sitter generate; tree-sitter test --show-fields -u"
   }
 ]

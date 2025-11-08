@@ -14,50 +14,57 @@ Expr
 ---
 
 (source_file
-  (define_micro
-    (identifier)
-    (at_angle_expression
-      (binop_expr
-        (number)
-        (number))))
-  (define_micro
-    (identifier)
-    (at_angle_expression
-      (binop_expr
-        (identifier)
-        (number))))
-  (define_micro
-    (identifier)
-    (at_angle_expression
-      (binop_expr
-        (number)
-        (identifier))))
-  (define_micro
-    (identifier)
-    (at_angle_expression
-      (binop_expr
-        (identifier)
-        (identifier))))
-  (define_micro
-    (identifier)
-    (at_angle_expression
-      (binop_expr
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (number)
+          (number)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
         (binop_expr
           (identifier)
-          (identifier))
-        (identifier))))
-  (define_micro
-    (identifier)
-    (at_angle_expression
-      (binop_expr
-        (at_reference)
-        (identifier))))
-  (define_micro
-    (identifier)
-    (at_angle_expression
-      (binop_expr
-        (identifier)
-        (at_angle_expression
+          (number)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (number)
+          (identifier)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (identifier)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
           (binop_expr
             (identifier)
-            (identifier)))))))
+            (identifier))
+          (identifier)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (at_reference)
+          (identifier)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (at_angle_expression
+            (binop_expr
+              (identifier)
+              (identifier))))))))

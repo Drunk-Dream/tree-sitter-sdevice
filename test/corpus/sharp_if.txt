@@ -1,0 +1,51 @@
+===================
+If
+===================
+
+#if @test@ == "1"
+#define a 1
+#elif @test@ == 2
+#define a 1
+#elif @test@ == "@test@"
+#define a 1
+#else
+#define a 1
+#endif
+
+---
+
+(source_file
+  (top_sharp_if_statement
+    condition: (expr
+      (binop_expr
+        (at_reference)
+        (string
+          (string_fragment))))
+    consequence: (sharp_command_statement
+      (define_micro
+        name: (identifier)
+        value: (boolean)))
+    alternative: (top_sharp_elif_clause
+      condition: (expr
+        (binop_expr
+          (at_reference)
+          (number)))
+      consequence: (sharp_command_statement
+        (define_micro
+          name: (identifier)
+          value: (boolean))))
+    alternative: (top_sharp_elif_clause
+      condition: (expr
+        (binop_expr
+          (at_reference)
+          (string
+            (at_reference))))
+      consequence: (sharp_command_statement
+        (define_micro
+          name: (identifier)
+          value: (boolean))))
+    alternative: (top_sharp_else_clause
+      consequence: (sharp_command_statement
+        (define_micro
+          name: (identifier)
+          value: (boolean))))))

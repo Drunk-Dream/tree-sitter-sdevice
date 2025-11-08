@@ -43,21 +43,16 @@ module.exports = grammar({
     // TODO: add the actual grammar rules
     source_file: ($) => repeat($._statement),
 
-    _statement: ($) => choice($._sharp_command, $.comment),
-
-    _sharp_command: ($) =>
-      prec(
-        10,
-        choice(
-          $.define_micro,
-          $.undefine_macro,
-          $.set_dep,
-          // $.if_command, // 添加 if_command
-          // $.endif_command, // 添加 endif_command
-          $.top_sharp_if_block,
-        ),
+    _statement: ($) =>
+      choice(
+        $.sharp_command_statement,
+        $.top_sharp_if_statement,
+        $._section_statements,
       ),
 
+    // sharp_command_statement
+    sharp_command_statement: ($) =>
+      choice($.define_micro, $.undefine_macro, $.set_dep),
     define_micro: ($) =>
       seq(
         $._sharp_define, // 使用外部扫描器生成的 token
@@ -76,28 +71,70 @@ module.exports = grammar({
       ),
     undefine_macro: ($) => seq($._sharp_undef, field("name", $.identifier)), // 使用外部扫描器生成的 token
     set_dep: ($) => seq($._sharp_setdep, $.at_reference), // 使用外部扫描器生成的 token
-    if_command: ($) =>
-      seq(
-        $._sharp_if, // 使用外部扫描器生成的 token
-        field("condition", $.expr),
+
+    // sharp_if_statement
+    top_sharp_if_statement: ($) =>
+      prec.right(
+        seq(
+          $._sharp_if,
+          field("condition", $.expr),
+          field("consequence", $._statement),
+          repeat(field("alternative", $.top_sharp_elif_clause)),
+          optional(field("alternative", $.top_sharp_else_clause)),
+          $._sharp_endif,
+        ),
       ),
-    elif_command: ($) => seq($._sharp_elif, field("condition", $.expr)),
-    else_command: ($) => $._sharp_else, // 使用外部扫描器生成的 token
-    endif_command: ($) => $._sharp_endif, // 使用外部扫描器生成的 token
-    top_sharp_if_block: ($) =>
-      sharpIfBlock(
-        $.if_command,
-        $.elif_command,
-        $.else_command,
-        $.endif_command,
-        $.identifier,
+    top_sharp_elif_clause: ($) =>
+      seq(
+        $._sharp_elif,
+        field("condition", $.expr),
+        field("consequence", $._statement),
+      ),
+    top_sharp_else_clause: ($) =>
+      seq($._sharp_else, field("consequence", $._statement)),
+
+    // section statement
+    _section_statements: ($) => choice($.file_section_statement),
+
+    // file section statement
+    file_section_statement: ($) =>
+      seq(/File/i, "{", repeat($.file_section_member), "}"),
+    file_section_member: ($) =>
+      choice(
+        seq(
+          field("type", $.file_section_key_with_value),
+          "=",
+          field("value", $.string),
+        ),
+        $.file_section_flag_keyword,
+        // 错误恢复规则
+        prec(-1, seq($.identifier, "=", $.string)), // 处理未知键值对
+        prec(-1, $.identifier), // 处理未知标志
+      ),
+    file_section_key_with_value: (_) =>
+      token.immediate(
+        choice(
+          /param\w*/,
+          /ChannelPlot\w*/,
+          /OptField[0-9]/,
+          /ACExtract|Bandstructure|Boundary|CMIPath|Current|DephasingRates|DevFields|DevicePath|Doping/i,
+          /EMWgrid|EMWinput|EmissionTable|Extraction|Gain|Grid|IlluminationSpectrum|LEDRadiation|LifeTime|Load/i,
+          /MesherInput|MobilityDoping|ModeGain|NewtonPlot|NonLocalPlot|OptFarField|OptField|OptGenTransientScaling/i,
+          /OpticalGenerationFile|OpticalGenerationInput|OpticalGenerationOutput|OpticalSolverInput|OpticsOutput|Output/i,
+          /PMIPath|PMIUserFields|ParameterPath|Parameters|Piezo|Plot|SPICEPath|Save|SaveOptField|SaveOptSpectrum/i,
+          /SpectralPlot|SponEmissionTable|StimEmissionTable|TensorPlot|TrappedCarPlotFile|VCSELNearField|eSHEDistribution|hSHEDistribution/i,
+        ),
+      ),
+    file_section_flag_keyword: (_) =>
+      token.immediate(
+        /Compressed|GridCompressed|PlotCompressed|SaveCompressed/i,
       ),
 
     at_angle_expression: ($) =>
       seq(token.immediate("@<"), $._expr, token.immediate(">@")),
 
+    // expr
     expr: ($) => $._expr,
-
     _expr: ($) =>
       choice(
         $.unary_expr,
@@ -111,10 +148,8 @@ module.exports = grammar({
         $.string,
         $.at_angle_expression,
       ),
-
     unary_expr: ($) =>
       prec.left(PREC.unary, seq(choice("-", "+", "~", "!"), $._expr)),
-
     binop_expr: ($) =>
       choice(
         prec.left(PREC.exp, seq($._expr, "**", $._expr)),
@@ -134,7 +169,6 @@ module.exports = grammar({
         prec.left(PREC.and_logical, seq($._expr, "&&", $._expr)),
         prec.left(PREC.or_logical, seq($._expr, "||", $._expr)),
       ),
-
     ternary_expr: ($) =>
       prec.left(PREC.ternary, seq($._expr, "?", $._expr, ":", $._expr)),
 
@@ -282,8 +316,8 @@ function commaSep(rule) {
  *
  * @param {Rule} sharp_if
  * @param {Rule} sharp_elif
- * @param {Rule} sharp_endif
  * @param {Rule} sharp_else
+ * @param {Rule} sharp_endif
  * @param {Rule} rule
  *
  * @returns {SeqRule}

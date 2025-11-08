@@ -14,38 +14,34 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_sharp_command"
+          "name": "sharp_command_statement"
         },
         {
           "type": "SYMBOL",
-          "name": "comment"
+          "name": "top_sharp_if_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_section_statements"
         }
       ]
     },
-    "_sharp_command": {
-      "type": "PREC",
-      "value": 10,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "define_micro"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "undefine_macro"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "set_dep"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "top_sharp_if_block"
-          }
-        ]
-      }
+    "sharp_command_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "define_micro"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "undefine_macro"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "set_dep"
+        }
+      ]
     },
     "define_micro": {
       "type": "SEQ",
@@ -127,24 +123,67 @@
         }
       ]
     },
-    "if_command": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_sharp_if"
-        },
-        {
-          "type": "FIELD",
-          "name": "condition",
-          "content": {
+    "top_sharp_if_statement": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
             "type": "SYMBOL",
-            "name": "expr"
+            "name": "_sharp_if"
+          },
+          {
+            "type": "FIELD",
+            "name": "condition",
+            "content": {
+              "type": "SYMBOL",
+              "name": "expr"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "consequence",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_statement"
+            }
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "FIELD",
+              "name": "alternative",
+              "content": {
+                "type": "SYMBOL",
+                "name": "top_sharp_elif_clause"
+              }
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "alternative",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "top_sharp_else_clause"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_sharp_endif"
           }
-        }
-      ]
+        ]
+      }
     },
-    "elif_command": {
+    "top_sharp_elif_clause": {
       "type": "SEQ",
       "members": [
         {
@@ -158,94 +197,188 @@
             "type": "SYMBOL",
             "name": "expr"
           }
+        },
+        {
+          "type": "FIELD",
+          "name": "consequence",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
         }
       ]
     },
-    "else_command": {
-      "type": "SYMBOL",
-      "name": "_sharp_else"
-    },
-    "endif_command": {
-      "type": "SYMBOL",
-      "name": "_sharp_endif"
-    },
-    "top_sharp_if_block": {
+    "top_sharp_else_clause": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "if_command"
+          "name": "_sharp_else"
         },
         {
-          "type": "CHOICE",
+          "type": "FIELD",
+          "name": "consequence",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        }
+      ]
+    },
+    "_section_statements": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "file_section_statement"
+        }
+      ]
+    },
+    "file_section_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "File",
+          "flags": "i"
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "file_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "file_section_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "FIELD",
+              "name": "type",
+              "content": {
+                "type": "SYMBOL",
+                "name": "file_section_key_with_value"
+              }
             },
             {
-              "type": "BLANK"
+              "type": "STRING",
+              "value": "="
+            },
+            {
+              "type": "FIELD",
+              "name": "value",
+              "content": {
+                "type": "SYMBOL",
+                "name": "string"
+              }
             }
           ]
         },
         {
-          "type": "REPEAT",
+          "type": "SYMBOL",
+          "name": "file_section_flag_keyword"
+        },
+        {
+          "type": "PREC",
+          "value": -1,
           "content": {
             "type": "SEQ",
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "elif_command"
+                "name": "identifier"
               },
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
+                "type": "STRING",
+                "value": "="
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string"
               }
             ]
           }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "else_command"
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "identifier"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "endif_command"
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         }
       ]
+    },
+    "file_section_key_with_value": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "param\\w*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "ChannelPlot\\w*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OptField[0-9]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "ACExtract|Bandstructure|Boundary|CMIPath|Current|DephasingRates|DevFields|DevicePath|Doping",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "EMWgrid|EMWinput|EmissionTable|Extraction|Gain|Grid|IlluminationSpectrum|LEDRadiation|LifeTime|Load",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "MesherInput|MobilityDoping|ModeGain|NewtonPlot|NonLocalPlot|OptFarField|OptField|OptGenTransientScaling",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OpticalGenerationFile|OpticalGenerationInput|OpticalGenerationOutput|OpticalSolverInput|OpticsOutput|Output",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "PMIPath|PMIUserFields|ParameterPath|Parameters|Piezo|Plot|SPICEPath|Save|SaveOptField|SaveOptSpectrum",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "SpectralPlot|SponEmissionTable|StimEmissionTable|TensorPlot|TrappedCarPlotFile|VCSELNearField|eSHEDistribution|hSHEDistribution",
+            "flags": "i"
+          }
+        ]
+      }
+    },
+    "file_section_flag_keyword": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "Compressed|GridCompressed|PlotCompressed|SaveCompressed",
+        "flags": "i"
+      }
     },
     "at_angle_expression": {
       "type": "SEQ",

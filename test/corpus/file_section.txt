@@ -1,0 +1,122 @@
+===================
+File Section
+===================
+
+#if 1
+File {
+    Grid    = "@tdr@"
+    DevFields = "n@node|fastTrap@_fastTrap_@fTime@_des.tdr"
+    Parameter = "@parameter@"
+    Plot    = "@tdrdat@"
+    Current = "@plot@"
+    Output  = "@log@"
+    PMIPath = "."
+    Compressed
+}
+#endif
+
+---
+
+(source_file
+  (top_sharp_if_statement
+    condition: (expr
+      (number))
+    consequence: (file_section_statement
+      (file_section_member
+        type: (file_section_key_with_value)
+        value: (string
+          (at_reference)))
+      (file_section_member
+        type: (file_section_key_with_value)
+        value: (string
+          (string_fragment)
+          (at_reference)
+          (string_fragment)
+          (at_reference)
+          (string_fragment)))
+      (file_section_member
+        (identifier)
+        (string
+          (at_reference)))
+      (file_section_member
+        type: (file_section_key_with_value)
+        value: (string
+          (at_reference)))
+      (file_section_member
+        type: (file_section_key_with_value)
+        value: (string
+          (at_reference)))
+      (file_section_member
+        type: (file_section_key_with_value)
+        value: (string
+          (at_reference)))
+      (file_section_member
+        type: (file_section_key_with_value)
+        value: (string
+          (string_fragment)))
+      (file_section_member
+        (file_section_flag_keyword)))))
+
+===================
+边界情况测试：未知键值对
+===================
+
+File {
+    UnknownKey = "value"
+    Grid = "@tdr@"
+}
+
+---
+
+(source_file
+  (file_section_statement
+    (file_section_member
+      (identifier)
+      (string
+        (string_fragment)))
+    (file_section_member
+      type: (file_section_key_with_value)
+      value: (string
+        (at_reference)))))
+
+===================
+边界情况测试：多个标志
+===================
+
+File {
+    Grid = "@tdr@"
+    Compressed GridCompressed
+}
+
+---
+
+(source_file
+  (file_section_statement
+    (file_section_member
+      type: (file_section_key_with_value)
+      value: (string
+        (at_reference)))
+    (file_section_member
+      (file_section_flag_keyword))
+    (file_section_member
+      (file_section_flag_keyword))))
+
+===================
+边界情况测试：未知标志
+===================
+
+File {
+    Grid = "@tdr@"
+    UnknownFlag
+}
+
+---
+
+(source_file
+  (file_section_statement
+    (file_section_member
+      type: (file_section_key_with_value)
+      value: (string
+        (at_reference)))
+    (file_section_member
+      (identifier))))
