@@ -78,7 +78,7 @@ module.exports = grammar({
         seq(
           $._sharp_if,
           field("condition", $.expr),
-          field("consequence", $._statement),
+          field("consequence", repeat($._statement)),
           repeat(field("alternative", $.top_sharp_elif_clause)),
           optional(field("alternative", $.top_sharp_else_clause)),
           $._sharp_endif,
@@ -88,10 +88,10 @@ module.exports = grammar({
       seq(
         $._sharp_elif,
         field("condition", $.expr),
-        field("consequence", $._statement),
+        field("consequence", repeat($._statement)),
       ),
     top_sharp_else_clause: ($) =>
-      seq($._sharp_else, field("consequence", $._statement)),
+      seq($._sharp_else, field("consequence", repeat($._statement))),
 
     // section statement
     _section_statements: ($) => choice($.file_section_statement),
@@ -129,6 +129,17 @@ module.exports = grammar({
       token.immediate(
         /Compressed|GridCompressed|PlotCompressed|SaveCompressed/i,
       ),
+    // file_section_shrp_if: ($) =>
+    //   prec.right(
+    //     seq(
+    //       $._sharp_if,
+    //       field("condition", $.expr),
+    //       field("consequence", $._statement),
+    //       repeat(field("alternative", $.top_sharp_elif_clause)),
+    //       optional(field("alternative", $.top_sharp_else_clause)),
+    //       $._sharp_endif,
+    //     ),
+    //   ),
 
     at_angle_expression: ($) =>
       seq(token.immediate("@<"), $._expr, token.immediate(">@")),

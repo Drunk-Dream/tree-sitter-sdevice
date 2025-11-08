@@ -397,8 +397,8 @@
         ]
       },
       "consequence": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
             "type": "file_section_statement",
@@ -421,8 +421,8 @@
     "named": true,
     "fields": {
       "consequence": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
             "type": "file_section_statement",
@@ -469,8 +469,8 @@
         ]
       },
       "consequence": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
           {
             "type": "file_section_statement",

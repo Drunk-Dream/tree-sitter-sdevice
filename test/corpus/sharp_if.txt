@@ -4,10 +4,10 @@ If
 
 #if @test@ == "1"
 #define a 1
+#define a 2
 #elif @test@ == 2
 #define a 1
 #elif @test@ == "@test@"
-#define a 1
 #else
 #define a 1
 #endif
@@ -25,6 +25,10 @@ If
       (define_micro
         name: (identifier)
         value: (boolean)))
+    consequence: (sharp_command_statement
+      (define_micro
+        name: (identifier)
+        value: (number)))
     alternative: (top_sharp_elif_clause
       condition: (expr
         (binop_expr
@@ -39,11 +43,7 @@ If
         (binop_expr
           (at_reference)
           (string
-            (at_reference))))
-      consequence: (sharp_command_statement
-        (define_micro
-          name: (identifier)
-          value: (boolean))))
+            (at_reference)))))
     alternative: (top_sharp_else_clause
       consequence: (sharp_command_statement
         (define_micro
