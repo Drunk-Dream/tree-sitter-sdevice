@@ -13,36 +13,29 @@ Define Micro
 ---
 
 (source_file
-  (sharp_command
-    (define_micro
-      (identifier)
-      (number)))
-  (sharp_command
-    (define_micro
-      (identifier)
-      (number)))
-  (sharp_command
-    (define_micro
-      (identifier)
-      (boolean)))
-  (sharp_command
-    (define_micro
-      (identifier)
-      (boolean)))
-  (sharp_command
-    (define_micro
-      (identifier)
-      (at_reference)))
-  (sharp_command
-    (define_micro
-      (identifier)
-      (string
-        (string_fragment))))
-  (sharp_command
-    (define_micro
-      (identifier)
-      (string
-        (at_reference)))))
+  (define_micro
+    (identifier)
+    (number))
+  (define_micro
+    (identifier)
+    (number))
+  (define_micro
+    (identifier)
+    (boolean))
+  (define_micro
+    (identifier)
+    (boolean))
+  (define_micro
+    (identifier)
+    (at_reference))
+  (define_micro
+    (identifier)
+    (string
+      (string_fragment)))
+  (define_micro
+    (identifier)
+    (string
+      (at_reference))))
 
 ===================
 Undefine Micro
@@ -59,27 +52,20 @@ Undefine Micro
 ---
 
 (source_file
-  (sharp_command
-    (undefine_macro
-      (identifier)))
-  (sharp_command
-    (undefine_macro
-      (identifier)))
-  (sharp_command
-    (undefine_macro
-      (identifier)))
-  (sharp_command
-    (undefine_macro
-      (identifier)))
-  (sharp_command
-    (undefine_macro
-      (identifier)))
-  (sharp_command
-    (undefine_macro
-      (identifier)))
-  (sharp_command
-    (undefine_macro
-      (identifier)))
+  (undefine_macro
+    (identifier))
+  (undefine_macro
+    (identifier))
+  (undefine_macro
+    (identifier))
+  (undefine_macro
+    (identifier))
+  (undefine_macro
+    (identifier))
+  (undefine_macro
+    (identifier))
+  (undefine_macro
+    (identifier))
   (comment))
 
 ===================
@@ -91,15 +77,14 @@ Set Dependency
 ---
 
 (source_file
-  (sharp_command
-    (set_dep
-      (at_reference))))
+  (set_dep
+    (at_reference)))
 
 ===================
 Comment
 ===================
 
-#test
+#test comment
 
 ---
 
@@ -111,32 +96,37 @@ If
 ===================
 
 #if @test@ == "1"
+ax
 #elif @test@ == 2
+bx
 #elif @test@ == "@test@"
+cx
+#else
 #endif
 
 ---
 
 (source_file
-  (sharp_command
+  (top_sharp_if_block
     (if_command
       (expr
         (binop_expr
           (at_reference)
           (string
-            (string_fragment))))))
-  (sharp_command
-    (if_command
+            (string_fragment)))))
+    (identifier)
+    (elif_command
       (expr
         (binop_expr
           (at_reference)
-          (number)))))
-  (sharp_command
-    (if_command
+          (number))))
+    (identifier)
+    (elif_command
       (expr
         (binop_expr
           (at_reference)
           (string
-            (at_reference))))))
-  (sharp_command
+            (at_reference)))))
+    (identifier)
+    (else_command)
     (endif_command)))

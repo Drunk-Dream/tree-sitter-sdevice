@@ -33,26 +33,28 @@ module.exports = grammar({
     $._sharp_setdep,
     $._sharp_if,
     $._sharp_elif,
+    $._sharp_else,
     $._sharp_endif,
     $.comment, // 外部扫描器处理的注释
   ],
-  extras: ($) => [$._whitespace], // 仅保留空白作为 extras
+  extras: ($) => [$._whitespace, $.comment], // 仅保留空白作为 extras
 
   rules: {
     // TODO: add the actual grammar rules
     source_file: ($) => repeat($._statement),
 
-    _statement: ($) => choice($.sharp_command, $.comment),
+    _statement: ($) => choice($._sharp_command, $.comment),
 
-    sharp_command: ($) =>
+    _sharp_command: ($) =>
       prec(
         10,
         choice(
           $.define_micro,
           $.undefine_macro,
           $.set_dep,
-          $.if_command, // 添加 if_command
-          $.endif_command, // 添加 endif_command
+          // $.if_command, // 添加 if_command
+          // $.endif_command, // 添加 endif_command
+          $.top_sharp_if_block,
         ),
       ),
 
@@ -76,12 +78,23 @@ module.exports = grammar({
     set_dep: ($) => seq($._sharp_setdep, $.at_reference), // 使用外部扫描器生成的 token
     if_command: ($) =>
       seq(
-        choice($._sharp_if, $._sharp_elif), // 使用外部扫描器生成的 token
+        $._sharp_if, // 使用外部扫描器生成的 token
         field("condition", $.expr),
       ),
+    elif_command: ($) => seq($._sharp_elif, field("condition", $.expr)),
+    else_command: ($) => $._sharp_else, // 使用外部扫描器生成的 token
     endif_command: ($) => $._sharp_endif, // 使用外部扫描器生成的 token
+    top_sharp_if_block: ($) =>
+      sharpIfBlock(
+        $.if_command,
+        $.elif_command,
+        $.else_command,
+        $.endif_command,
+        $.identifier,
+      ),
 
-    at_angle_expression: ($) => seq("@<", $._expr, ">@"),
+    at_angle_expression: ($) =>
+      seq(token.immediate("@<"), $._expr, token.immediate(">@")),
 
     expr: ($) => $._expr,
 
@@ -96,6 +109,7 @@ module.exports = grammar({
         $.identifier,
         $.at_reference,
         $.string,
+        $.at_angle_expression,
       ),
 
     unary_expr: ($) =>
@@ -220,12 +234,14 @@ module.exports = grammar({
       ),
 
     at_reference: (_) =>
-      seq(
-        "@",
-        repeat(
-          /[^\x00-\x1F\s\p{Zs}:;`"'@#.,^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B\u2028\u2029]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/u,
+      token.immediate(
+        seq(
+          "@",
+          repeat(
+            /[^\x00-\x1F\s\p{Zs}:;`"'@#.,^&<=>+\-*/\\%?!~()\[\]{}\uFEFF\u2060\u200B\u2028\u2029]|\\u[0-9a-fA-F]{4}|\\u\{[0-9a-fA-F]+\}/u,
+          ),
+          "@",
         ),
-        "@",
       ),
     identifier: (_) => {
       const alpha =
@@ -259,4 +275,26 @@ function commaSep1(rule) {
  */
 function commaSep(rule) {
   return optional(commaSep1(rule));
+}
+
+/**
+ * Creates a rule to match a sharp if block
+ *
+ * @param {Rule} sharp_if
+ * @param {Rule} sharp_elif
+ * @param {Rule} sharp_endif
+ * @param {Rule} sharp_else
+ * @param {Rule} rule
+ *
+ * @returns {SeqRule}
+ */
+
+function sharpIfBlock(sharp_if, sharp_elif, sharp_else, sharp_endif, rule) {
+  return seq(
+    sharp_if,
+    optional(rule),
+    repeat(seq(sharp_elif, optional(rule))),
+    optional(seq(sharp_else, optional(rule))),
+    sharp_endif,
+  );
 }
