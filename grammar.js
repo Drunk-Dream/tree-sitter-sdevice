@@ -174,7 +174,7 @@ module.exports = grammar({
       token.immediate(
         /Compressed|GridCompressed|PlotCompressed|SaveCompressed/i,
       ),
-    // file_section_shrp_if: ($) =>
+    // file_section_sharp_if: ($) =>
     //   prec.right(
     //     seq(
     //       $._sharp_if,
@@ -378,13 +378,3 @@ function commaSep(rule) {
  *
  * @returns {SeqRule}
  */
-
-function sharpIfBlock(sharp_if, sharp_elif, sharp_else, sharp_endif, rule) {
-  return seq(
-    sharp_if,
-    optional(rule),
-    repeat(seq(sharp_elif, optional(rule))),
-    optional(seq(sharp_else, optional(rule))),
-    sharp_endif,
-  );
-}
