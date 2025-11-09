@@ -1,47 +1,13 @@
-===================
-Expr
-===================
-
-#define x @<1 + 1>@
-#define x @<x + 2>@
-#define x @<3 + y>@
-#define x @<x + y>@
+================================
+Nested At Angle Expression
+================================
 
 #define x @<(x + y) + z>@
-#define x @<@x@ == y>@
 #define x @<y + @<z + w>@>@
 
 ---
 
 (source_file
-  (sharp_command_statement
-    (define_micro
-      name: (identifier)
-      value: (at_angle_expression
-        (binop_expr
-          (number)
-          (number)))))
-  (sharp_command_statement
-    (define_micro
-      name: (identifier)
-      value: (at_angle_expression
-        (binop_expr
-          (identifier)
-          (number)))))
-  (sharp_command_statement
-    (define_micro
-      name: (identifier)
-      value: (at_angle_expression
-        (binop_expr
-          (number)
-          (identifier)))))
-  (sharp_command_statement
-    (define_micro
-      name: (identifier)
-      value: (at_angle_expression
-        (binop_expr
-          (identifier)
-          (identifier)))))
   (sharp_command_statement
     (define_micro
       name: (identifier)
@@ -56,7 +22,53 @@ Expr
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
-          (at_reference)
+          (identifier)
+          (at_angle_expression
+            (binop_expr
+              (identifier)
+              (identifier))))))))
+
+==================
+At angle expression with numbers
+==================
+
+#define x @<1 + 1>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (number)
+          (number))))))
+
+================================
+Simple At Angle Expression With Identifiers
+================================
+
+#define x @<x + 2>@
+#define x @<3 + y>@
+#define x @<x + y>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (number)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (number)
           (identifier)))))
   (sharp_command_statement
     (define_micro
@@ -64,7 +76,129 @@ Expr
       value: (at_angle_expression
         (binop_expr
           (identifier)
-          (at_angle_expression
-            (binop_expr
-              (identifier)
-              (identifier))))))))
+          (identifier))))))
+
+==================
+At Angle Expression with At-Reference
+==================
+
+#define x @<@x@ == y>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (at_reference)
+          (identifier))))))
+
+==================
+Binop Expression Precedence
+==================
+
+#define c @<1 + 2 * 3>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (number)
+          (binop_expr
+            (number)
+            (number)))))))
+
+==================
+In Expression
+==================
+
+#define f @<a in b>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (identifier))))))
+
+==================
+Logical Expression
+==================
+
+#define d @<a && b || c>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (binop_expr
+            (identifier)
+            (identifier))
+          (identifier))))))
+
+==================
+String Comparison Expression
+==================
+
+#define e @<"hello" eq "world">@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (string
+            (string_fragment))
+          (string
+            (string_fragment)))))))
+
+==================
+Ternary Expression
+==================
+
+#define b @<a ? b : c>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (ternary_expr
+          (identifier)
+          (identifier)
+          (identifier))))))
+
+==================
+Unary Expression
+==================
+
+#define a @<-1>@
+
+---
+
+(source_file
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (unary_expr
+          (number))))))

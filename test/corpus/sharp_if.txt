@@ -49,3 +49,67 @@ If
         (define_micro
           name: (identifier)
           value: (boolean))))))
+
+===================
+Nested If
+===================
+
+#if @test@ == "1"
+  #if @nested@ == "2"
+    #define a 1
+  #else
+    #define b 2
+  #endif
+#else
+  #define c 3
+#endif
+
+---
+
+(source_file
+  (top_sharp_if_statement
+    condition: (expr
+      (binop_expr
+        (at_reference)
+        (string
+          (string_fragment))))
+    consequence: (top_sharp_if_statement
+      condition: (expr
+        (binop_expr
+          (at_reference)
+          (string
+            (string_fragment))))
+      consequence: (sharp_command_statement
+        (define_micro
+          name: (identifier)
+          value: (boolean)))
+      alternative: (top_sharp_else_clause
+        consequence: (sharp_command_statement
+          (define_micro
+            name: (identifier)
+            value: (number)))))
+    alternative: (top_sharp_else_clause
+      consequence: (sharp_command_statement
+        (define_micro
+          name: (identifier)
+          value: (number))))))
+
+===================
+If without statements
+===================
+
+#if 1
+#elif 0
+#else
+#endif
+
+---
+
+(source_file
+  (top_sharp_if_statement
+    condition: (expr
+      (number))
+    alternative: (top_sharp_elif_clause
+      condition: (expr
+        (number)))
+    alternative: (top_sharp_else_clause)))

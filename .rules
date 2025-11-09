@@ -37,6 +37,46 @@
 *   **结构化测试文件**：将测试用例组织在易于导航的目录结构中，例如按功能或语法特性分类。
 *   **预期 AST (Abstract Syntax Tree)**：为每个测试用例提供预期的 AST 结构，以便验证解析器的正确性。
 *   **错误恢复测试**：编写测试用例，验证解析器在遇到语法错误时的错误恢复能力。
+*   **测试用例目录**：将在 `test\corpus` 目录下编写测试用例。
+*   **测试用例格式**：一个文件中可以存在多个测试用例，每个测试用例都需要遵循以下格式：
+
+```plain
+==================
+Return statements
+==================
+
+func x() int {
+  return 1;
+}
+
+---
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (block
+      (return_statement (number)))))
+
+==================
+Seconde test
+==================
+
+func x() int {
+  return 1;
+}
+
+---
+
+(source_file
+  (function_definition
+    (identifier)
+    (parameter_list)
+    (primitive_type)
+    (block
+      (return_statement (number)))))
+```
 
 ## 4. 文档规范
 

@@ -8,7 +8,9 @@ Define Micro
 #define _test_  true
 #define _at_reference_ @node|test@
 #define _test_string_ "test"
-#define _test_string_ "@test@"
+#define _test_string_with_at_ "@test@"
+#define _angle_ @<1+2>@
+#define with_comment 123 # this is a comment
 
 ---
 
@@ -42,7 +44,19 @@ Define Micro
     (define_micro
       name: (identifier)
       value: (string
-        (at_reference)))))
+        (at_reference))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (number)
+          (number)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (comment))
 
 ===================
 Undefine Micro
@@ -54,7 +68,8 @@ Undefine Micro
 #undef _test_
 #undef _at_reference_
 #undef _test_string_
-#undef _test_string_ #comment
+#undef _test_string_with_at_ #comment
+#undef another_one # another one
 
 ---
 
@@ -77,6 +92,10 @@ Undefine Micro
   (sharp_command_statement
     (undefine_macro
       name: (identifier)))
+  (sharp_command_statement
+    (undefine_macro
+      name: (identifier)))
+  (comment)
   (sharp_command_statement
     (undefine_macro
       name: (identifier)))
@@ -87,21 +106,30 @@ Set Dependency
 ===================
 
 #setdep @node|test@
+#setdep @another|dep@ # with comment
 
 ---
 
 (source_file
   (sharp_command_statement
     (set_dep
-      (at_reference))))
+      (at_reference)))
+  (sharp_command_statement
+    (set_dep
+      (at_reference)))
+  (comment))
 
 ===================
-Comment
+Comment only
 ===================
 
 #test comment
+# this is a standalone comment
+## another one
 
 ---
 
 (source_file
+  (comment)
+  (comment)
   (comment))

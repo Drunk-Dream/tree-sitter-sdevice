@@ -35,8 +35,8 @@ File {
           (at_reference)
           (string_fragment)))
       (file_section_member
-        (identifier)
-        (string
+        type: (file_section_key_with_value)
+        value: (string
           (at_reference)))
       (file_section_member
         type: (file_section_key_with_value)

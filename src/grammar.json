@@ -338,44 +338,272 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "param\\w*"
-          },
-          {
-            "type": "PATTERN",
-            "value": "ChannelPlot\\w*"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OptField[0-9]"
-          },
-          {
-            "type": "PATTERN",
-            "value": "ACExtract|Bandstructure|Boundary|CMIPath|Current|DephasingRates|DevFields|DevicePath|Doping",
+            "value": "param\\w*",
             "flags": "i"
           },
           {
             "type": "PATTERN",
-            "value": "EMWgrid|EMWinput|EmissionTable|Extraction|Gain|Grid|IlluminationSpectrum|LEDRadiation|LifeTime|Load",
+            "value": "ChannelPlot\\w*",
             "flags": "i"
           },
           {
             "type": "PATTERN",
-            "value": "MesherInput|MobilityDoping|ModeGain|NewtonPlot|NonLocalPlot|OptFarField|OptField|OptGenTransientScaling",
+            "value": "OptField[0-9]",
             "flags": "i"
           },
           {
             "type": "PATTERN",
-            "value": "OpticalGenerationFile|OpticalGenerationInput|OpticalGenerationOutput|OpticalSolverInput|OpticsOutput|Output",
+            "value": "ACExtract",
             "flags": "i"
           },
           {
             "type": "PATTERN",
-            "value": "PMIPath|PMIUserFields|ParameterPath|Parameters|Piezo|Plot|SPICEPath|Save|SaveOptField|SaveOptSpectrum",
+            "value": "Bandstructure",
             "flags": "i"
           },
           {
             "type": "PATTERN",
-            "value": "SpectralPlot|SponEmissionTable|StimEmissionTable|TensorPlot|TrappedCarPlotFile|VCSELNearField|eSHEDistribution|hSHEDistribution",
+            "value": "Boundary",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "CMIPath",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Current",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "DephasingRates",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "DevFields",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "DevicePath",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Doping",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "EMWgrid",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "EMWinput",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "EmissionTable",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Extraction",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Gain",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Grid",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "IlluminationSpectrum",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "LEDRadiation",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "LifeTime",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Load",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "MesherInput",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "MobilityDoping",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "ModeGain",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "NewtonPlot",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "NonLocalPlot",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OptFarField",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OptField",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OptGenTransientScaling",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OpticalGenerationFile",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OpticalGenerationInput",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OpticalGenerationOutput",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OpticalSolverInput",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "OpticsOutput",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Output",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "PMIPath",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "PMIUserFields",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "ParameterPath",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Parameters",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Piezo",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Plot",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "SPICEPath",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "Save",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "SaveOptField",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "SaveOptSpectrum",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "SpectralPlot",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "SponEmissionTable",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "StimEmissionTable",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "TensorPlot",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "TrappedCarPlotFile",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "VCSELNearField",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "eSHEDistribution",
+            "flags": "i"
+          },
+          {
+            "type": "PATTERN",
+            "value": "hSHEDistribution",
             "flags": "i"
           }
         ]
