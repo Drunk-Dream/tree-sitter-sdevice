@@ -18,11 +18,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "top_sharp_if_statement"
+          "name": "sharp_if_top_statement"
         },
         {
           "type": "SYMBOL",
-          "name": "_section_statements"
+          "name": "section_statement"
         }
       ]
     },
@@ -123,7 +123,7 @@
         }
       ]
     },
-    "top_sharp_if_statement": {
+    "sharp_if_top_statement": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -159,7 +159,7 @@
               "name": "alternative",
               "content": {
                 "type": "SYMBOL",
-                "name": "top_sharp_elif_clause"
+                "name": "sharp_elif_top_clause"
               }
             }
           },
@@ -171,7 +171,7 @@
                 "name": "alternative",
                 "content": {
                   "type": "SYMBOL",
-                  "name": "top_sharp_else_clause"
+                  "name": "sharp_else_top_clause"
                 }
               },
               {
@@ -186,7 +186,7 @@
         ]
       }
     },
-    "top_sharp_elif_clause": {
+    "sharp_elif_top_clause": {
       "type": "SEQ",
       "members": [
         {
@@ -214,7 +214,7 @@
         }
       ]
     },
-    "top_sharp_else_clause": {
+    "sharp_else_top_clause": {
       "type": "SEQ",
       "members": [
         {
@@ -234,22 +234,12 @@
         }
       ]
     },
-    "_section_statements": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "file_section_statement"
-        }
-      ]
-    },
-    "file_section_statement": {
+    "section_statement": {
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "File",
-          "flags": "i"
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "STRING",
@@ -259,7 +249,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "file_section_member"
+            "name": "_section_member"
           }
         },
         {
@@ -268,354 +258,173 @@
         }
       ]
     },
-    "file_section_member": {
+    "_section_member": {
       "type": "CHOICE",
       "members": [
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "type",
-              "content": {
-                "type": "SYMBOL",
-                "name": "file_section_key_with_value"
-              }
-            },
-            {
-              "type": "STRING",
-              "value": "="
-            },
-            {
-              "type": "FIELD",
-              "name": "value",
-              "content": {
-                "type": "SYMBOL",
-                "name": "string"
-              }
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "SYMBOL",
-          "name": "file_section_flag_keyword"
+          "name": "key_value"
         },
         {
-          "type": "PREC",
-          "value": -1,
+          "type": "SYMBOL",
+          "name": "sharp_if_section_statement"
+        }
+      ]
+    },
+    "sharp_if_section_statement": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_sharp_if"
+          },
+          {
+            "type": "FIELD",
+            "name": "condition",
+            "content": {
+              "type": "SYMBOL",
+              "name": "expr"
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "consequence",
+            "content": {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_section_member"
+              }
+            }
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "FIELD",
+              "name": "alternative",
+              "content": {
+                "type": "SYMBOL",
+                "name": "sharp_elif_section_clause"
+              }
+            }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "alternative",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "sharp_else_section_clause"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_sharp_endif"
+          }
+        ]
+      }
+    },
+    "sharp_elif_section_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sharp_elif"
+        },
+        {
+          "type": "FIELD",
+          "name": "condition",
           "content": {
-            "type": "SEQ",
+            "type": "SYMBOL",
+            "name": "expr"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "consequence",
+          "content": {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_section_member"
+            }
+          }
+        }
+      ]
+    },
+    "sharp_else_section_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sharp_else"
+        },
+        {
+          "type": "FIELD",
+          "name": "consequence",
+          "content": {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_section_member"
+            }
+          }
+        }
+      ]
+    },
+    "key_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": false,
+          "value": "key"
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "CHOICE",
             "members": [
               {
                 "type": "SYMBOL",
                 "name": "identifier"
               },
               {
-                "type": "STRING",
-                "value": "="
+                "type": "SYMBOL",
+                "name": "number"
               },
               {
                 "type": "SYMBOL",
                 "name": "string"
               }
             ]
-          }
-        },
-        {
-          "type": "PREC",
-          "value": -1,
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
+          },
+          "named": false,
+          "value": "value"
         }
       ]
-    },
-    "file_section_key_with_value": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "PATTERN",
-            "value": "param\\w*",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "ChannelPlot\\w*",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OptField[0-9]",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "ACExtract",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Bandstructure",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Boundary",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "CMIPath",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Current",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "DephasingRates",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "DevFields",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "DevicePath",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Doping",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "EMWgrid",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "EMWinput",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "EmissionTable",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Extraction",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Gain",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Grid",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "IlluminationSpectrum",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "LEDRadiation",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "LifeTime",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Load",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "MesherInput",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "MobilityDoping",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "ModeGain",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "NewtonPlot",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "NonLocalPlot",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OptFarField",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OptField",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OptGenTransientScaling",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OpticalGenerationFile",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OpticalGenerationInput",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OpticalGenerationOutput",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OpticalSolverInput",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "OpticsOutput",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Output",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "PMIPath",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "PMIUserFields",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "ParameterPath",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Parameters",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Piezo",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Plot",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "SPICEPath",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "Save",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "SaveOptField",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "SaveOptSpectrum",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "SpectralPlot",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "SponEmissionTable",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "StimEmissionTable",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "TensorPlot",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "TrappedCarPlotFile",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "VCSELNearField",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "eSHEDistribution",
-            "flags": "i"
-          },
-          {
-            "type": "PATTERN",
-            "value": "hSHEDistribution",
-            "flags": "i"
-          }
-        ]
-      }
-    },
-    "file_section_flag_keyword": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "Compressed|GridCompressed|PlotCompressed|SaveCompressed",
-        "flags": "i"
-      }
     },
     "at_angle_expression": {
       "type": "SEQ",
@@ -636,6 +445,29 @@
           "content": {
             "type": "STRING",
             "value": ">@"
+          }
+        }
+      ]
+    },
+    "at_square_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "@["
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expr"
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "@]"
           }
         }
       ]
@@ -699,6 +531,10 @@
         {
           "type": "SYMBOL",
           "name": "at_angle_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "at_square_expression"
         }
       ]
     },

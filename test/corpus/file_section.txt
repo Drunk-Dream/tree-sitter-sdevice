@@ -7,7 +7,9 @@ File {
     Grid    = "@tdr@"
     DevFields = "n@node|fastTrap@_fastTrap_@fTime@_des.tdr"
     Parameter = "@parameter@"
+    #if 1
     Plot    = "@tdrdat@"
+    #endif
     Current = "@plot@"
     Output  = "@log@"
     PMIPath = "."
@@ -18,44 +20,33 @@ File {
 ---
 
 (source_file
-  (top_sharp_if_statement
+  (sharp_if_top_statement
     condition: (expr
       (number))
-    consequence: (file_section_statement
-      (file_section_member
-        type: (file_section_key_with_value)
-        value: (string
+    consequence: (section_statement
+      (identifier)
+      (key_value
+        (at_reference))
+      (key_value
+        (string_fragment)
+        (at_reference)
+        (string_fragment)
+        (at_reference)
+        (string_fragment))
+      (key_value
+        (at_reference))
+      (sharp_if_section_statement
+        condition: (expr
+          (number))
+        consequence: (key_value
           (at_reference)))
-      (file_section_member
-        type: (file_section_key_with_value)
-        value: (string
-          (string_fragment)
-          (at_reference)
-          (string_fragment)
-          (at_reference)
-          (string_fragment)))
-      (file_section_member
-        type: (file_section_key_with_value)
-        value: (string
-          (at_reference)))
-      (file_section_member
-        type: (file_section_key_with_value)
-        value: (string
-          (at_reference)))
-      (file_section_member
-        type: (file_section_key_with_value)
-        value: (string
-          (at_reference)))
-      (file_section_member
-        type: (file_section_key_with_value)
-        value: (string
-          (at_reference)))
-      (file_section_member
-        type: (file_section_key_with_value)
-        value: (string
-          (string_fragment)))
-      (file_section_member
-        (file_section_flag_keyword)))))
+      (key_value
+        (at_reference))
+      (key_value
+        (at_reference))
+      (key_value
+        (string_fragment))
+      (identifier))))
 
 ===================
 边界情况测试：未知键值对
@@ -69,15 +60,12 @@ File {
 ---
 
 (source_file
-  (file_section_statement
-    (file_section_member
-      (identifier)
-      (string
-        (string_fragment)))
-    (file_section_member
-      type: (file_section_key_with_value)
-      value: (string
-        (at_reference)))))
+  (section_statement
+    (identifier)
+    (key_value
+      (string_fragment))
+    (key_value
+      (at_reference))))
 
 ===================
 边界情况测试：多个标志
@@ -91,15 +79,12 @@ File {
 ---
 
 (source_file
-  (file_section_statement
-    (file_section_member
-      type: (file_section_key_with_value)
-      value: (string
-        (at_reference)))
-    (file_section_member
-      (file_section_flag_keyword))
-    (file_section_member
-      (file_section_flag_keyword))))
+  (section_statement
+    (identifier)
+    (key_value
+      (at_reference))
+    (identifier)
+    (identifier)))
 
 ===================
 边界情况测试：未知标志
@@ -113,10 +98,8 @@ File {
 ---
 
 (source_file
-  (file_section_statement
-    (file_section_member
-      type: (file_section_key_with_value)
-      value: (string
-        (at_reference)))
-    (file_section_member
-      (identifier))))
+  (section_statement
+    (identifier)
+    (key_value
+      (at_reference))
+    (identifier)))
