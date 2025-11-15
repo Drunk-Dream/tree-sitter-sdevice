@@ -37,7 +37,7 @@ module.exports = grammar({
     $._sharp_endif,
     $.comment, // 外部扫描器处理的注释
   ],
-  extras: ($) => [$._whitespace, $.comment], // 仅保留空白作为 extras
+  extras: ($) => [$._whitespace, $.comment, $.tcl_block], // 仅保留空白作为 extras
 
   rules: {
     // TODO: add the actual grammar rules
@@ -95,14 +95,27 @@ module.exports = grammar({
 
     section_statement: ($) =>
       seq(
-        $.identifier,
+        field("name", $.identifier),
         optional(seq("(", field("range", $.key_value), ")")),
         "{",
         repeat($._section_member),
         "}",
       ),
     _section_member: ($) =>
-      choice($.identifier, $.key_value, $.sharp_if_section_statement),
+      choice(
+        $.identifier,
+        $.key_value,
+        $.at_reference,
+        $.at_angle_expression,
+        $.at_square_expression,
+        $.number,
+        $.string,
+        $.parentheses,
+        $.braces,
+        $.sharp_if_section_statement,
+        "/",
+        "-",
+      ),
     // sharp_if_section_statement
     sharp_if_section_statement: ($) =>
       prec.right(
@@ -124,14 +137,26 @@ module.exports = grammar({
     sharp_else_section_clause: ($) =>
       seq($._sharp_else, field("consequence", repeat($._section_member))),
     key_value: ($) =>
-      seq(
-        field("key", $.identifier),
-        "=",
-        field("value", choice($.identifier, $.number, $.string)),
+      prec.left(
+        seq(
+          field("key", $._section_member),
+          "=",
+          field("value", $._section_member),
+        ),
       ),
 
-    parentheses: ($) => seq("(", repeat($._section_member), ")"),
+    parentheses: ($) => seq("(", repeat(commaSep1($._section_member)), ")"),
+    braces: ($) => seq("{", repeat(commaSep1($._section_member)), "}"),
 
+    tcl_block: ($) =>
+      prec(
+        1,
+        seq(
+          token.immediate("!("),
+          field("content", repeat(choice($.expr, "{", "}", "[", "]"))),
+          token.immediate(")!"),
+        ),
+      ),
     at_angle_expression: ($) =>
       seq(token.immediate("@<"), $._expr, token.immediate(">@")),
     at_square_expression: ($) =>

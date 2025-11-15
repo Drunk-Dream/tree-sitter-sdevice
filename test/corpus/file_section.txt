@@ -24,7 +24,7 @@ File (test="key") {
     condition: (expr
       (number))
     consequence: (section_statement
-      (identifier)
+      name: (identifier)
       range: (key_value
         key: (identifier)
         value: (string
@@ -79,7 +79,7 @@ File {
 
 (source_file
   (section_statement
-    (identifier)
+    name: (identifier)
     (key_value
       key: (identifier)
       value: (string
@@ -102,7 +102,7 @@ File {
 
 (source_file
   (section_statement
-    (identifier)
+    name: (identifier)
     (key_value
       key: (identifier)
       value: (string
@@ -123,7 +123,7 @@ File {
 
 (source_file
   (section_statement
-    (identifier)
+    name: (identifier)
     (key_value
       key: (identifier)
       value: (string
