@@ -94,7 +94,13 @@ module.exports = grammar({
       seq($._sharp_else, field("consequence", repeat($._statement))),
 
     section_statement: ($) =>
-      seq($.identifier, "{", repeat($._section_member), "}"),
+      seq(
+        $.identifier,
+        optional(seq("(", field("range", $.key_value), ")")),
+        "{",
+        repeat($._section_member),
+        "}",
+      ),
     _section_member: ($) =>
       choice($.identifier, $.key_value, $.sharp_if_section_statement),
     // sharp_if_section_statement
@@ -119,115 +125,12 @@ module.exports = grammar({
       seq($._sharp_else, field("consequence", repeat($._section_member))),
     key_value: ($) =>
       seq(
-        alias($.identifier, "key"),
+        field("key", $.identifier),
         "=",
-        alias(choice($.identifier, $.number, $.string), "value"),
+        field("value", choice($.identifier, $.number, $.string)),
       ),
-    // // section statement
-    // _section_statements: ($) => choice($.file_section_statement),
 
-    // // file section statement
-    // file_section_statement: ($) =>
-    //   seq(/File/i, "{", repeat($.file_section_member), "}"),
-    // file_section_member: ($) =>
-    //   choice(
-    //     seq(
-    //       field("type", $.file_section_key_with_value),
-    //       "=",
-    //       field("value", $.string),
-    //     ),
-    //     $.file_section_flag_keyword,
-    //     alias("sharp_if_statement", $.file_section_sharp_if_statement),
-    //     // 错误恢复规则
-    //     prec(-1, seq($.identifier, "=", $.string)), // 处理未知键值对
-    //     prec(-1, $.identifier), // 处理未知标志
-    //   ),
-    // file_section_key_with_value: (_) =>
-    //   token.immediate(
-    //     choice(
-    //       /param\w*/i,
-    //       /ChannelPlot\w*/i,
-    //       /OptField[0-9]/i,
-    //       /ACExtract/i,
-    //       /Bandstructure/i,
-    //       /Boundary/i,
-    //       /CMIPath/i,
-    //       /Current/i,
-    //       /DephasingRates/i,
-    //       /DevFields/i,
-    //       /DevicePath/i,
-    //       /Doping/i,
-    //       /EMWgrid/i,
-    //       /EMWinput/i,
-    //       /EmissionTable/i,
-    //       /Extraction/i,
-    //       /Gain/i,
-    //       /Grid/i,
-    //       /IlluminationSpectrum/i,
-    //       /LEDRadiation/i,
-    //       /LifeTime/i,
-    //       /Load/i,
-    //       /MesherInput/i,
-    //       /MobilityDoping/i,
-    //       /ModeGain/i,
-    //       /NewtonPlot/i,
-    //       /NonLocalPlot/i,
-    //       /OptFarField/i,
-    //       /OptField/i,
-    //       /OptGenTransientScaling/i,
-    //       /OpticalGenerationFile/i,
-    //       /OpticalGenerationInput/i,
-    //       /OpticalGenerationOutput/i,
-    //       /OpticalSolverInput/i,
-    //       /OpticsOutput/i,
-    //       /Output/i,
-    //       /PMIPath/i,
-    //       /PMIUserFields/i,
-    //       /ParameterPath/i,
-    //       /Parameters/i,
-    //       /Piezo/i,
-    //       /Plot/i,
-    //       /SPICEPath/i,
-    //       /Save/i,
-    //       /SaveOptField/i,
-    //       /SaveOptSpectrum/i,
-    //       /SpectralPlot/i,
-    //       /SponEmissionTable/i,
-    //       /StimEmissionTable/i,
-    //       /TensorPlot/i,
-    //       /TrappedCarPlotFile/i,
-    //       /VCSELNearField/i,
-    //       /eSHEDistribution/i,
-    //       /hSHEDistribution/i,
-    //     ),
-    //   ),
-    // file_section_flag_keyword: (_) =>
-    //   token.immediate(
-    //     /Compressed|GridCompressed|PlotCompressed|SaveCompressed/i,
-    //   ),
-    // // sharp_if_statement
-    // file_section_sharp_if_statement: ($) =>
-    //   prec.right(
-    //     seq(
-    //       $._sharp_if,
-    //       field("condition", $.expr),
-    //       field("consequence", repeat($.file_section_member)),
-    //       repeat(field("alternative", $.file_section_sharp_elif_clause)),
-    //       optional(field("alternative", $.file_section_sharp_else_clause)),
-    //       $._sharp_endif,
-    //     ),
-    //   ),
-    // file_section_sharp_elif_clause: ($) =>
-    //   seq(
-    //     $._sharp_elif,
-    //     field("condition", $.expr),
-    //     field("consequence", repeat($.file_section_member)),
-    //   ),
-    // file_section_sharp_else_clause: ($) =>
-    //   seq(
-    //     $._sharp_else,
-    //     field("consequence", repeat($.filemem_section_member)),
-    //   ),
+    parentheses: ($) => seq("(", repeat($._section_member), ")"),
 
     at_angle_expression: ($) =>
       seq(token.immediate("@<"), $._expr, token.immediate(">@")),

@@ -257,12 +257,52 @@
   {
     "type": "key_value",
     "named": true,
-    "fields": {}
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "section_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "range": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "key_value",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -698,29 +738,6 @@
     }
   },
   {
-    "type": "value",
-    "named": false,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "at_reference",
-          "named": true
-        },
-        {
-          "type": "escape_sequence",
-          "named": true
-        },
-        {
-          "type": "string_fragment",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "!",
     "named": false
   },
@@ -870,10 +887,6 @@
     "named": false
   },
   {
-    "type": "key",
-    "named": false
-  },
-  {
     "type": "ne",
     "named": false
   },
@@ -888,10 +901,6 @@
   {
     "type": "string_fragment",
     "named": true
-  },
-  {
-    "type": "value",
-    "named": false
   },
   {
     "type": "{",

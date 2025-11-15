@@ -3,7 +3,7 @@ File Section
 ===================
 
 #if 1
-File {
+File (test="key") {
     Grid    = "@tdr@"
     DevFields = "n@node|fastTrap@_fastTrap_@fTime@_des.tdr"
     Parameter = "@parameter@"
@@ -25,27 +25,45 @@ File {
       (number))
     consequence: (section_statement
       (identifier)
+      range: (key_value
+        key: (identifier)
+        value: (string
+          (string_fragment)))
       (key_value
-        (at_reference))
+        key: (identifier)
+        value: (string
+          (at_reference)))
       (key_value
-        (string_fragment)
-        (at_reference)
-        (string_fragment)
-        (at_reference)
-        (string_fragment))
+        key: (identifier)
+        value: (string
+          (string_fragment)
+          (at_reference)
+          (string_fragment)
+          (at_reference)
+          (string_fragment)))
       (key_value
-        (at_reference))
+        key: (identifier)
+        value: (string
+          (at_reference)))
       (sharp_if_section_statement
         condition: (expr
           (number))
         consequence: (key_value
+          key: (identifier)
+          value: (string
+            (at_reference))))
+      (key_value
+        key: (identifier)
+        value: (string
           (at_reference)))
       (key_value
-        (at_reference))
+        key: (identifier)
+        value: (string
+          (at_reference)))
       (key_value
-        (at_reference))
-      (key_value
-        (string_fragment))
+        key: (identifier)
+        value: (string
+          (string_fragment)))
       (identifier))))
 
 ===================
@@ -63,9 +81,13 @@ File {
   (section_statement
     (identifier)
     (key_value
-      (string_fragment))
+      key: (identifier)
+      value: (string
+        (string_fragment)))
     (key_value
-      (at_reference))))
+      key: (identifier)
+      value: (string
+        (at_reference)))))
 
 ===================
 边界情况测试：多个标志
@@ -82,7 +104,9 @@ File {
   (section_statement
     (identifier)
     (key_value
-      (at_reference))
+      key: (identifier)
+      value: (string
+        (at_reference)))
     (identifier)
     (identifier)))
 
@@ -101,5 +125,7 @@ File {
   (section_statement
     (identifier)
     (key_value
-      (at_reference))
+      key: (identifier)
+      value: (string
+        (at_reference)))
     (identifier)))

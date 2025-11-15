@@ -1,0 +1,130 @@
+===================
+Whole File
+===================
+#setdep @node|sde@
+
+#define _t0_    5e-7
+#define _ti_    @<_t0_+5e-7>@
+#define _trise_ 2e-7
+#define _td_    @<_ti_+_trise_>@
+#define _tw_    @<_td_+1e-3>@
+#define _pend_  @<_tw_+1.5e-7>@
+
+#define _Vpassp_ 8.0
+#define _Vpasse_ 8.0
+
+#define _Vslp_   3.5
+#define _Vsle_   15.0
+#define _WF_ 4.8
+
+#define t_TOx @ttuox@
+#define t_CTN @tnit@
+#define t_BOx @tbox@
+
+####################################
+
+File {
+    	Grid 	= "@tdr@"
+	    Parameter = "@parameter@"
+    	Plot 	= "@tdrdat@"
+    	Current = "@plot@"
+    	Output 	= "@log@"
+
+}
+---
+
+(source_file
+  (sharp_command_statement
+    (set_dep
+      (at_reference)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (number)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (identifier)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (number)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_angle_expression
+        (binop_expr
+          (identifier)
+          (number)))))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (number)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_reference)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_reference)))
+  (sharp_command_statement
+    (define_micro
+      name: (identifier)
+      value: (at_reference)))
+  (comment)
+  (section_statement
+    (identifier)
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))))
