@@ -18,6 +18,12 @@ enum TokenType {
   COMMENT,
 };
 
+// 自定义的 isalnum 实现，替代 C 标准库函数
+static inline bool is_alnum_char(int32_t c) {
+  return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+         (c >= '0' && c <= '9');
+}
+
 /**
  * 跳过空白字符。
  */
@@ -75,7 +81,7 @@ bool tree_sitter_sdevice_external_scanner_scan(void *payload, TSLexer *lexer,
     // 读取 '#' 后面的指令
     char directive[20];
     int len = 0;
-    while (len < 19 && isalnum((unsigned char)lexer->lookahead)) {
+    while (len < 19 && is_alnum_char((unsigned char)lexer->lookahead)) {
       directive[len++] = (char)lexer->lookahead;
       lexer->advance(lexer, false);
     }
