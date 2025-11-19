@@ -2,7 +2,7 @@
   "name": "tree-sitter-sdevice",
   "version": "0.0.1",
   "description": "Sentaurus TCAD sdevice command file.",
-  "repository": "https://github.com/tree-sitter/tree-sitter-sdevice",
+  "repository": "https://github.com/Drunk-Dream/tree-sitter-sdevice",
   "license": "MIT",
   "author": {
     "name": "drudream",

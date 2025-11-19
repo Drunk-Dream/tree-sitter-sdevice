@@ -1,4 +1,4 @@
-module github.com/tree-sitter/tree-sitter-sdevice
+module github.com/Drunk-Dream/tree-sitter-sdevice
 
 go 1.22
 

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(tree-sitter-sdevice
         VERSION "0.0.1"
         DESCRIPTION "Sentaurus TCAD sdevice command file."
-        HOMEPAGE_URL "https://github.com/tree-sitter/tree-sitter-sdevice"
+        HOMEPAGE_URL "https://github.com/Drunk-Dream/tree-sitter-sdevice"
         LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)

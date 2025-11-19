@@ -14,7 +14,7 @@ let package = Package(
         .library(name: "TreeSitterSdevice", targets: ["TreeSitterSdevice"]),
     ],
     dependencies: [
-        .package(name: "SwiftTreeSitter", url: "https://github.com/tree-sitter/swift-tree-sitter", from: "0.9.0"),
+        .package(name: "SwiftTreeSitter", url: "https://github.com/Drunk-Dream/swift-tree-sitter", from: "0.9.0"),
     ],
     targets: [
         .target(
