@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-sdevice"
 description = "Sentaurus TCAD sdevice command file."
-version = "0.0.4"
+version = "0.0.5"
 authors = ["drudream <dru-dream@outlook.com>"]
 license = "MIT"
 readme = "README.md"
