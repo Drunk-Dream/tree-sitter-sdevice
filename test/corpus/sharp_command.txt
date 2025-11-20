@@ -85,28 +85,36 @@ Undefine Micro
 (source_file
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (comment)
   (sharp_command_statement
     (undefine_macro
+      (sharp_command_name)
       name: (identifier)))
   (comment))
 
@@ -122,9 +130,11 @@ Set Dependency
 (source_file
   (sharp_command_statement
     (set_dep
+      (sharp_command_name)
       (at_reference)))
   (sharp_command_statement
     (set_dep
+      (sharp_command_name)
       (at_reference)))
   (comment))
 

@@ -102,8 +102,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_sharp_undef"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sharp_undef"
+          },
+          "named": true,
+          "value": "sharp_command_name"
         },
         {
           "type": "FIELD",
@@ -119,8 +124,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_sharp_setdep"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sharp_setdep"
+          },
+          "named": true,
+          "value": "sharp_command_name"
         },
         {
           "type": "SYMBOL",
@@ -653,22 +663,82 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "IMMEDIATE_TOKEN",
+          "type": "ALIAS",
           "content": {
-            "type": "STRING",
-            "value": "@["
-          }
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "@["
+            }
+          },
+          "named": true,
+          "value": "at_square_expression_open"
         },
         {
           "type": "SYMBOL",
-          "name": "_expr"
+          "name": "command"
         },
         {
-          "type": "IMMEDIATE_TOKEN",
+          "type": "ALIAS",
           "content": {
-            "type": "STRING",
-            "value": "@]"
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "]@"
+            }
+          },
+          "named": true,
+          "value": "at_square_expression_close"
+        }
+      ]
+    },
+    "command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
           }
+        },
+        {
+          "type": "FIELD",
+          "name": "args",
+          "content": {
+            "type": "REPEAT1",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_command_with_square_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "expr"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "_command_with_square_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "["
+        },
+        {
+          "type": "SYMBOL",
+          "name": "command"
+        },
+        {
+          "type": "STRING",
+          "value": "]"
         }
       ]
     },

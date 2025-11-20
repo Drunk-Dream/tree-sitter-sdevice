@@ -10,5 +10,10 @@
   {
     "label": "Tests Update",
     "command": "tree-sitter generate; tree-sitter test --show-fields -u"
+  },
+  {
+    "label": "Bump My Version Patch",
+    "command": "bump-my-version",
+    "args": ["bump", "patch", "--commit"]
   }
 ]

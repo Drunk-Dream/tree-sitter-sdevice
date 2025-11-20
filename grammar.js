@@ -165,7 +165,21 @@ module.exports = grammar({
     at_angle_expression: ($) =>
       seq(token.immediate("@<"), $._expr, token.immediate(">@")),
     at_square_expression: ($) =>
-      seq(token.immediate("@["), $._expr, token.immediate("@]")),
+      seq(
+        alias(token.immediate("@["), $.at_square_expression_open),
+        $.command,
+        alias(token.immediate("]@"), $.at_square_expression_close),
+      ),
+    // command
+    command: ($) =>
+      seq(
+        field("name", $.identifier),
+        field(
+          "args",
+          repeat1(choice($._command_with_square_expression, $.expr)),
+        ),
+      ),
+    _command_with_square_expression: ($) => seq("[", $.command, "]"),
 
     // expr
     expr: ($) => $._expr,

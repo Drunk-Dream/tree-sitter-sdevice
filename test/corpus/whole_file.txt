@@ -484,6 +484,7 @@ Solve {
 (source_file
   (sharp_command_statement
     (set_dep
+      (sharp_command_name)
       (at_reference)))
   (sharp_command_statement
     (define_micro
