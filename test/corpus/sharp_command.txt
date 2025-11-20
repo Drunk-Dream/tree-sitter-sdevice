@@ -29,12 +29,12 @@ Define Micro
     (define_micro
       (sharp_command_name)
       name: (identifier)
-      value: (boolean)))
+      value: (identifier)))
   (sharp_command_statement
     (define_micro
       (sharp_command_name)
       name: (identifier)
-      value: (boolean)))
+      value: (identifier)))
   (sharp_command_statement
     (define_micro
       (sharp_command_name)

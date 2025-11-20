@@ -125,11 +125,6 @@
     }
   },
   {
-    "type": "boolean",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "braces",
     "named": true,
     "fields": {},
@@ -193,6 +188,14 @@
         "required": true,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
             "type": "[",
             "named": false
           },
@@ -201,11 +204,47 @@
             "named": false
           },
           {
+            "type": "at_angle_expression",
+            "named": true
+          },
+          {
+            "type": "at_reference",
+            "named": true
+          },
+          {
+            "type": "at_square_expression",
+            "named": true
+          },
+          {
+            "type": "binop_expr",
+            "named": true
+          },
+          {
             "type": "command",
             "named": true
           },
           {
-            "type": "expr",
+            "type": "escape_sequence",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "ternary_expr",
+            "named": true
+          },
+          {
+            "type": "unary_expr",
             "named": true
           }
         ]
@@ -237,9 +276,17 @@
         ]
       },
       "value": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
           {
             "type": "at_angle_expression",
             "named": true
@@ -249,7 +296,15 @@
             "named": true
           },
           {
-            "type": "boolean",
+            "type": "at_square_expression",
+            "named": true
+          },
+          {
+            "type": "binop_expr",
+            "named": true
+          },
+          {
+            "type": "escape_sequence",
             "named": true
           },
           {
@@ -262,6 +317,14 @@
           },
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "ternary_expr",
+            "named": true
+          },
+          {
+            "type": "unary_expr",
             "named": true
           }
         ]
@@ -1120,6 +1183,14 @@
         "required": false,
         "types": [
           {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
             "type": "[",
             "named": false
           },
@@ -1128,7 +1199,43 @@
             "named": false
           },
           {
-            "type": "expr",
+            "type": "at_angle_expression",
+            "named": true
+          },
+          {
+            "type": "at_reference",
+            "named": true
+          },
+          {
+            "type": "at_square_expression",
+            "named": true
+          },
+          {
+            "type": "binop_expr",
+            "named": true
+          },
+          {
+            "type": "escape_sequence",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "ternary_expr",
+            "named": true
+          },
+          {
+            "type": "unary_expr",
             "named": true
           },
           {
@@ -1337,14 +1444,6 @@
   },
   {
     "type": "/",
-    "named": false
-  },
-  {
-    "type": "0",
-    "named": false
-  },
-  {
-    "type": "1",
     "named": false
   },
   {

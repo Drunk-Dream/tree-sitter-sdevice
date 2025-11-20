@@ -57,17 +57,7 @@ module.exports = grammar({
       seq(
         alias($._sharp_define, $.sharp_command_name), // 使用外部扫描器生成的 token
         field("name", $.identifier),
-        field(
-          "value",
-          choice(
-            $.at_reference,
-            $.number,
-            $.boolean,
-            $.identifier,
-            $.string,
-            $.at_angle_expression,
-          ),
-        ),
+        field("value", $._expr),
       ),
     undefine_macro: ($) =>
       seq(
@@ -160,7 +150,7 @@ module.exports = grammar({
         1,
         seq(
           token.immediate("!("),
-          field("content", repeat(choice($.expr, "{", "}", "[", "]"))),
+          field("content", repeat(choice($._expr, "{", "}", "[", "]"))),
           token.immediate(")!"),
         ),
       ),
@@ -178,7 +168,7 @@ module.exports = grammar({
         field("name", $.identifier),
         field(
           "args",
-          repeat1(choice($._command_with_square_expression, $.expr)),
+          repeat1(choice($._command_with_square_expression, $._expr)),
         ),
       ),
     _command_with_square_expression: ($) => seq("[", $.command, "]"),
