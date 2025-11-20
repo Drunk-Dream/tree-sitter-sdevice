@@ -3,6 +3,7 @@ Define Micro
 ===================
 
 #define _Vpass_ 8.0
+#define _Vpass_ -8.0
 #define _dt_    2.0e-4
 #define _trise_ false
 #define _test_  true
@@ -20,6 +21,12 @@ Define Micro
       (sharp_command_name)
       name: (identifier)
       value: (number)))
+  (sharp_command_statement
+    (define_micro
+      (sharp_command_name)
+      name: (identifier)
+      value: (unary_expr
+        (number))))
   (sharp_command_statement
     (define_micro
       (sharp_command_name)

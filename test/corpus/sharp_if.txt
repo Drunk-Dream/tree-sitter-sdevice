@@ -61,6 +61,7 @@ Nested If
 #if @test@ == "1"
   #if @nested@ == "2"
     #define a 1
+    #define a -1
   #else
     #define b 2
   #endif
@@ -88,6 +89,12 @@ Nested If
           (sharp_command_name)
           name: (identifier)
           value: (number)))
+      consequence: (sharp_command_statement
+        (define_micro
+          (sharp_command_name)
+          name: (identifier)
+          value: (unary_expr
+            (number))))
       alternative: (sharp_else_top_clause
         consequence: (sharp_command_statement
           (define_micro
