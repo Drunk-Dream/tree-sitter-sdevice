@@ -55,7 +55,7 @@ module.exports = grammar({
       choice($.define_micro, $.undefine_macro, $.set_dep),
     define_micro: ($) =>
       seq(
-        $._sharp_define, // 使用外部扫描器生成的 token
+        alias($._sharp_define, $.sharp_command_name), // 使用外部扫描器生成的 token
         field("name", $.identifier),
         field(
           "value",
@@ -69,8 +69,13 @@ module.exports = grammar({
           ),
         ),
       ),
-    undefine_macro: ($) => seq($._sharp_undef, field("name", $.identifier)), // 使用外部扫描器生成的 token
-    set_dep: ($) => seq($._sharp_setdep, $.at_reference), // 使用外部扫描器生成的 token
+    undefine_macro: ($) =>
+      seq(
+        alias($._sharp_undef, $.sharp_command_name),
+        field("name", $.identifier),
+      ), // 使用外部扫描器生成的 token
+    set_dep: ($) =>
+      seq(alias($._sharp_setdep, $.sharp_command_name), $.at_reference), // 使用外部扫描器生成的 token
 
     // sharp_if_top_statement
     sharp_if_top_statement: ($) =>

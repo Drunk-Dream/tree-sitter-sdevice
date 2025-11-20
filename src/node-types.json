@@ -252,6 +252,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "sharp_command_name",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1277,6 +1287,10 @@
   },
   {
     "type": "number",
+    "named": true
+  },
+  {
+    "type": "sharp_command_name",
     "named": true
   },
   {

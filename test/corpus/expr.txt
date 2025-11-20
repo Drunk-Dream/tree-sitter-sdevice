@@ -10,6 +10,7 @@ Nested At Angle Expression
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -19,6 +20,7 @@ Nested At Angle Expression
           (identifier)))))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -39,6 +41,7 @@ At angle expression with numbers
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -58,6 +61,7 @@ Simple At Angle Expression With Identifiers
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -65,6 +69,7 @@ Simple At Angle Expression With Identifiers
           (number)))))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -72,6 +77,7 @@ Simple At Angle Expression With Identifiers
           (identifier)))))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -89,6 +95,7 @@ At Angle Expression with At-Reference
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -106,6 +113,7 @@ Binop Expression Precedence
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -125,6 +133,7 @@ In Expression
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -142,6 +151,7 @@ Logical Expression
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -161,6 +171,7 @@ String Comparison Expression
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -180,6 +191,7 @@ Ternary Expression
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (ternary_expr
@@ -198,6 +210,7 @@ Unary Expression
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (unary_expr

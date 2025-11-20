@@ -47,8 +47,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_sharp_define"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sharp_define"
+          },
+          "named": true,
+          "value": "sharp_command_name"
         },
         {
           "type": "FIELD",

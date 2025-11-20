@@ -176,7 +176,7 @@ static const char * const ts_symbol_names[] = {
   [sym_at_reference] = "at_reference",
   [sym_identifier] = "identifier",
   [sym__whitespace] = "_whitespace",
-  [sym__sharp_define] = "_sharp_define",
+  [sym__sharp_define] = "sharp_command_name",
   [sym__sharp_undef] = "_sharp_undef",
   [sym__sharp_setdep] = "_sharp_setdep",
   [sym__sharp_if] = "_sharp_if",
@@ -546,7 +546,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .named = true,
   },
   [sym__sharp_define] = {
-    .visible = false,
+    .visible = true,
     .named = true,
   },
   [sym__sharp_undef] = {

@@ -23,10 +23,12 @@ If
           (string_fragment))))
     consequence: (sharp_command_statement
       (define_micro
+        (sharp_command_name)
         name: (identifier)
         value: (boolean)))
     consequence: (sharp_command_statement
       (define_micro
+        (sharp_command_name)
         name: (identifier)
         value: (number)))
     alternative: (sharp_elif_top_clause
@@ -36,6 +38,7 @@ If
           (number)))
       consequence: (sharp_command_statement
         (define_micro
+          (sharp_command_name)
           name: (identifier)
           value: (boolean))))
     alternative: (sharp_elif_top_clause
@@ -47,6 +50,7 @@ If
     alternative: (sharp_else_top_clause
       consequence: (sharp_command_statement
         (define_micro
+          (sharp_command_name)
           name: (identifier)
           value: (boolean))))))
 
@@ -81,16 +85,19 @@ Nested If
             (string_fragment))))
       consequence: (sharp_command_statement
         (define_micro
+          (sharp_command_name)
           name: (identifier)
           value: (boolean)))
       alternative: (sharp_else_top_clause
         consequence: (sharp_command_statement
           (define_micro
+            (sharp_command_name)
             name: (identifier)
             value: (number)))))
     alternative: (sharp_else_top_clause
       consequence: (sharp_command_statement
         (define_micro
+          (sharp_command_name)
           name: (identifier)
           value: (number))))))
 

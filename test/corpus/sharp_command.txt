@@ -17,36 +17,44 @@ Define Micro
 (source_file
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (number)))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (number)))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (boolean)))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (boolean)))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_reference)))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (string
         (string_fragment))))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (string
         (at_reference))))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (at_angle_expression
         (binop_expr
@@ -54,6 +62,7 @@ Define Micro
           (number)))))
   (sharp_command_statement
     (define_micro
+      (sharp_command_name)
       name: (identifier)
       value: (number)))
   (comment))
