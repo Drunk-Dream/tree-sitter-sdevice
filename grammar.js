@@ -82,7 +82,7 @@ module.exports = grammar({
       prec.right(
         seq(
           $._sharp_if,
-          field("condition", $.expr),
+          field("condition", choice($.expr, $._command_with_square_expression)),
           field("consequence", repeat($._statement)),
           repeat(field("alternative", $.sharp_elif_top_clause)),
           optional(field("alternative", $.sharp_else_top_clause)),
@@ -92,7 +92,7 @@ module.exports = grammar({
     sharp_elif_top_clause: ($) =>
       seq(
         $._sharp_elif,
-        field("condition", $.expr),
+        field("condition", choice($.expr, $._command_with_square_expression)),
         field("consequence", repeat($._statement)),
       ),
     sharp_else_top_clause: ($) =>
@@ -116,6 +116,7 @@ module.exports = grammar({
         $.number,
         $.string,
         $.parentheses,
+        $.square_brackets,
         $.braces,
         $.sharp_if_section_statement,
         "/",
@@ -126,7 +127,7 @@ module.exports = grammar({
       prec.right(
         seq(
           $._sharp_if,
-          field("condition", $.expr),
+          field("condition", choice($.expr, $._command_with_square_expression)),
           field("consequence", repeat($._section_member)),
           repeat(field("alternative", $.sharp_elif_section_clause)),
           optional(field("alternative", $.sharp_else_section_clause)),
@@ -136,7 +137,7 @@ module.exports = grammar({
     sharp_elif_section_clause: ($) =>
       seq(
         $._sharp_elif,
-        field("condition", $.expr),
+        field("condition", choice($.expr, $._command_with_square_expression)),
         field("consequence", repeat($._section_member)),
       ),
     sharp_else_section_clause: ($) =>
@@ -151,6 +152,7 @@ module.exports = grammar({
       ),
 
     parentheses: ($) => seq("(", repeat(commaSep1($._section_member)), ")"),
+    square_brackets: ($) => seq("[", repeat(commaSep1($._section_member)), "]"),
     braces: ($) => seq("{", repeat(commaSep1($._section_member)), "}"),
 
     tcl_block: ($) =>
@@ -281,6 +283,7 @@ module.exports = grammar({
               alias($.unescaped_double_string_fragment, $.string_fragment),
               $.escape_sequence,
               $.at_reference,
+              $.at_angle_expression,
             ),
           ),
           '"',
