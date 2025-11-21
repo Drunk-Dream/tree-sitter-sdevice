@@ -72,7 +72,7 @@ module.exports = grammar({
       prec.right(
         seq(
           $._sharp_if,
-          field("condition", choice($.expr, $._command_with_square_expression)),
+          field("condition", $._expr),
           field("consequence", repeat($._statement)),
           repeat(field("alternative", $.sharp_elif_top_clause)),
           optional(field("alternative", $.sharp_else_top_clause)),
@@ -82,7 +82,7 @@ module.exports = grammar({
     sharp_elif_top_clause: ($) =>
       seq(
         $._sharp_elif,
-        field("condition", choice($.expr, $._command_with_square_expression)),
+        field("condition", $._expr),
         field("consequence", repeat($._statement)),
       ),
     sharp_else_top_clause: ($) =>
@@ -117,7 +117,7 @@ module.exports = grammar({
       prec.right(
         seq(
           $._sharp_if,
-          field("condition", choice($.expr, $._command_with_square_expression)),
+          field("condition", $._expr),
           field("consequence", repeat($._section_member)),
           repeat(field("alternative", $.sharp_elif_section_clause)),
           optional(field("alternative", $.sharp_else_section_clause)),
@@ -127,7 +127,7 @@ module.exports = grammar({
     sharp_elif_section_clause: ($) =>
       seq(
         $._sharp_elif,
-        field("condition", choice($.expr, $._command_with_square_expression)),
+        field("condition", $._expr),
         field("consequence", repeat($._section_member)),
       ),
     sharp_else_section_clause: ($) =>
@@ -147,10 +147,10 @@ module.exports = grammar({
 
     tcl_block: ($) =>
       prec(
-        1,
+        10,
         seq(
           token.immediate("!("),
-          field("content", repeat(choice($._expr, "{", "}", "[", "]"))),
+          field("content", repeat(choice($._expr, "{", "}"))),
           token.immediate(")!"),
         ),
       ),
@@ -166,15 +166,19 @@ module.exports = grammar({
     command: ($) =>
       seq(
         field("name", $.identifier),
-        field(
-          "args",
-          repeat1(choice($._command_with_square_expression, $._expr)),
-        ),
+        field("args", repeat1(choice($._expr, $.number_format))),
       ),
-    _command_with_square_expression: ($) => seq("[", $.command, "]"),
+    _command_with_square_bracket: ($) => seq("[", $.command, "]"),
 
     // expr
-    expr: ($) => $._expr,
+    expr: ($) =>
+      choice(
+        $.unary_expr,
+        $.binop_expr,
+        $.ternary_expr,
+        $.at_angle_expression,
+        $.at_square_expression,
+      ),
     _expr: ($) =>
       choice(
         $.unary_expr,
@@ -188,6 +192,7 @@ module.exports = grammar({
         $.string,
         $.at_angle_expression,
         $.at_square_expression,
+        $._command_with_square_bracket,
       ),
     unary_expr: ($) =>
       prec.left(PREC.unary, seq(choice("-", "+", "~", "!"), $._expr)),
@@ -212,6 +217,8 @@ module.exports = grammar({
       ),
     ternary_expr: ($) =>
       prec.left(PREC.ternary, seq($._expr, "?", $._expr, ":", $._expr)),
+
+    number_format: (_) => /%[-+ #0]?(\d+|\*)?(\.\d+|\.\*)?[diuoxXfFeEgGaA]/,
 
     number: (_) => {
       const hexLiteral = seq(choice("0x", "0X"), /[\da-fA-F](_?[\da-fA-F])*/);

@@ -127,17 +127,8 @@
             "type": "FIELD",
             "name": "condition",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "expr"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_command_with_square_expression"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_expr"
             }
           },
           {
@@ -196,17 +187,8 @@
           "type": "FIELD",
           "name": "condition",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "expr"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_command_with_square_expression"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_expr"
           }
         },
         {
@@ -370,17 +352,8 @@
             "type": "FIELD",
             "name": "condition",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "expr"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_command_with_square_expression"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_expr"
             }
           },
           {
@@ -439,17 +412,8 @@
           "type": "FIELD",
           "name": "condition",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "expr"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_command_with_square_expression"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_expr"
           }
         },
         {
@@ -639,7 +603,7 @@
     },
     "tcl_block": {
       "type": "PREC",
-      "value": 1,
+      "value": 10,
       "content": {
         "type": "SEQ",
         "members": [
@@ -669,14 +633,6 @@
                   {
                     "type": "STRING",
                     "value": "}"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "["
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "]"
                   }
                 ]
               }
@@ -769,11 +725,11 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_command_with_square_expression"
+                  "name": "_expr"
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "_expr"
+                  "name": "number_format"
                 }
               ]
             }
@@ -781,7 +737,7 @@
         }
       ]
     },
-    "_command_with_square_expression": {
+    "_command_with_square_bracket": {
       "type": "SEQ",
       "members": [
         {
@@ -799,8 +755,29 @@
       ]
     },
     "expr": {
-      "type": "SYMBOL",
-      "name": "_expr"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "unary_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binop_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ternary_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "at_angle_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "at_square_expression"
+        }
+      ]
     },
     "_expr": {
       "type": "CHOICE",
@@ -861,6 +838,10 @@
         {
           "type": "SYMBOL",
           "name": "at_square_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_command_with_square_bracket"
         }
       ]
     },
@@ -1279,6 +1260,10 @@
           }
         ]
       }
+    },
+    "number_format": {
+      "type": "PATTERN",
+      "value": "%[-+ #0]?(\\d+|\\*)?(\\.\\d+|\\.\\*)?[diuoxXfFeEgGaA]"
     },
     "number": {
       "type": "TOKEN",
