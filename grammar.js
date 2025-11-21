@@ -71,22 +71,25 @@ module.exports = grammar({
     sharp_if_top_statement: ($) =>
       prec.right(
         seq(
-          $._sharp_if,
+          alias($._sharp_if, $.sharp_command_name),
           field("condition", $._expr),
           field("consequence", repeat($._statement)),
           repeat(field("alternative", $.sharp_elif_top_clause)),
           optional(field("alternative", $.sharp_else_top_clause)),
-          $._sharp_endif,
+          alias($._sharp_endif, $.sharp_command_name),
         ),
       ),
     sharp_elif_top_clause: ($) =>
       seq(
-        $._sharp_elif,
+        alias($._sharp_elif, $.sharp_command_name),
         field("condition", $._expr),
         field("consequence", repeat($._statement)),
       ),
     sharp_else_top_clause: ($) =>
-      seq($._sharp_else, field("consequence", repeat($._statement))),
+      seq(
+        alias($._sharp_else, $.sharp_command_name),
+        field("consequence", repeat($._statement)),
+      ),
 
     section_statement: ($) =>
       seq(
@@ -116,22 +119,25 @@ module.exports = grammar({
     sharp_if_section_statement: ($) =>
       prec.right(
         seq(
-          $._sharp_if,
+          alias($._sharp_if, $.sharp_command_name),
           field("condition", $._expr),
           field("consequence", repeat($._section_member)),
           repeat(field("alternative", $.sharp_elif_section_clause)),
           optional(field("alternative", $.sharp_else_section_clause)),
-          $._sharp_endif,
+          alias($._sharp_endif, $.sharp_command_name),
         ),
       ),
     sharp_elif_section_clause: ($) =>
       seq(
-        $._sharp_elif,
+        alias($._sharp_elif, $.sharp_command_name),
         field("condition", $._expr),
         field("consequence", repeat($._section_member)),
       ),
     sharp_else_section_clause: ($) =>
-      seq($._sharp_else, field("consequence", repeat($._section_member))),
+      seq(
+        alias($._sharp_else, $.sharp_command_name),
+        field("consequence", repeat($._section_member)),
+      ),
     key_value: ($) =>
       prec.left(
         seq(

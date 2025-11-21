@@ -16,6 +16,7 @@ If
 
 (source_file
   (sharp_if_top_statement
+    (sharp_command_name)
     condition: (binop_expr
       (at_reference)
       (string
@@ -31,6 +32,7 @@ If
         name: (identifier)
         value: (number)))
     alternative: (sharp_elif_top_clause
+      (sharp_command_name)
       condition: (binop_expr
         (at_reference)
         (number))
@@ -40,16 +42,19 @@ If
           name: (identifier)
           value: (number))))
     alternative: (sharp_elif_top_clause
+      (sharp_command_name)
       condition: (binop_expr
         (at_reference)
         (string
           (at_reference))))
     alternative: (sharp_else_top_clause
+      (sharp_command_name)
       consequence: (sharp_command_statement
         (define_micro
           (sharp_command_name)
           name: (identifier)
-          value: (number))))))
+          value: (number))))
+    (sharp_command_name)))
 
 ===================
 Nested If
@@ -70,11 +75,13 @@ Nested If
 
 (source_file
   (sharp_if_top_statement
+    (sharp_command_name)
     condition: (binop_expr
       (at_reference)
       (string
         (string_fragment)))
     consequence: (sharp_if_top_statement
+      (sharp_command_name)
       condition: (binop_expr
         (at_reference)
         (string
@@ -91,17 +98,21 @@ Nested If
           value: (unary_expr
             (number))))
       alternative: (sharp_else_top_clause
+        (sharp_command_name)
         consequence: (sharp_command_statement
           (define_micro
             (sharp_command_name)
             name: (identifier)
-            value: (number)))))
+            value: (number))))
+      (sharp_command_name))
     alternative: (sharp_else_top_clause
+      (sharp_command_name)
       consequence: (sharp_command_statement
         (define_micro
           (sharp_command_name)
           name: (identifier)
-          value: (number))))))
+          value: (number))))
+    (sharp_command_name)))
 
 ===================
 If without statements
@@ -116,7 +127,11 @@ If without statements
 
 (source_file
   (sharp_if_top_statement
+    (sharp_command_name)
     condition: (number)
     alternative: (sharp_elif_top_clause
+      (sharp_command_name)
       condition: (number))
-    alternative: (sharp_else_top_clause)))
+    alternative: (sharp_else_top_clause
+      (sharp_command_name))
+    (sharp_command_name)))

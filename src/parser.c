@@ -175,10 +175,10 @@ static const char * const ts_symbol_names[] = {
   [sym__sharp_define] = "sharp_command_name",
   [sym__sharp_undef] = "sharp_command_name",
   [sym__sharp_setdep] = "sharp_command_name",
-  [sym__sharp_if] = "_sharp_if",
-  [sym__sharp_elif] = "_sharp_elif",
-  [sym__sharp_else] = "_sharp_else",
-  [sym__sharp_endif] = "_sharp_endif",
+  [sym__sharp_if] = "sharp_command_name",
+  [sym__sharp_elif] = "sharp_command_name",
+  [sym__sharp_else] = "sharp_command_name",
+  [sym__sharp_endif] = "sharp_command_name",
   [sym_comment] = "comment",
   [sym_source_file] = "source_file",
   [sym__statement] = "_statement",
@@ -276,10 +276,10 @@ static const TSSymbol ts_symbol_map[] = {
   [sym__sharp_define] = sym__sharp_define,
   [sym__sharp_undef] = sym__sharp_define,
   [sym__sharp_setdep] = sym__sharp_define,
-  [sym__sharp_if] = sym__sharp_if,
-  [sym__sharp_elif] = sym__sharp_elif,
-  [sym__sharp_else] = sym__sharp_else,
-  [sym__sharp_endif] = sym__sharp_endif,
+  [sym__sharp_if] = sym__sharp_define,
+  [sym__sharp_elif] = sym__sharp_define,
+  [sym__sharp_else] = sym__sharp_define,
+  [sym__sharp_endif] = sym__sharp_define,
   [sym_comment] = sym_comment,
   [sym_source_file] = sym_source_file,
   [sym__statement] = sym__statement,
@@ -543,19 +543,19 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .named = true,
   },
   [sym__sharp_if] = {
-    .visible = false,
+    .visible = true,
     .named = true,
   },
   [sym__sharp_elif] = {
-    .visible = false,
+    .visible = true,
     .named = true,
   },
   [sym__sharp_else] = {
-    .visible = false,
+    .visible = true,
     .named = true,
   },
   [sym__sharp_endif] = {
-    .visible = false,
+    .visible = true,
     .named = true,
   },
   [sym_comment] = {
@@ -33640,7 +33640,7 @@ TS_PUBLIC const TSLanguage *tree_sitter_sdevice(void) {
     .metadata = {
       .major_version = 0,
       .minor_version = 0,
-      .patch_version = 5,
+      .patch_version = 6,
     },
   };
   return &language;

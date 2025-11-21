@@ -120,8 +120,13 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "_sharp_if"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_sharp_if"
+            },
+            "named": true,
+            "value": "sharp_command_name"
           },
           {
             "type": "FIELD",
@@ -170,8 +175,13 @@
             ]
           },
           {
-            "type": "SYMBOL",
-            "name": "_sharp_endif"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_sharp_endif"
+            },
+            "named": true,
+            "value": "sharp_command_name"
           }
         ]
       }
@@ -180,8 +190,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_sharp_elif"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sharp_elif"
+          },
+          "named": true,
+          "value": "sharp_command_name"
         },
         {
           "type": "FIELD",
@@ -208,8 +223,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_sharp_else"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sharp_else"
+          },
+          "named": true,
+          "value": "sharp_command_name"
         },
         {
           "type": "FIELD",
@@ -345,8 +365,13 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "SYMBOL",
-            "name": "_sharp_if"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_sharp_if"
+            },
+            "named": true,
+            "value": "sharp_command_name"
           },
           {
             "type": "FIELD",
@@ -395,8 +420,13 @@
             ]
           },
           {
-            "type": "SYMBOL",
-            "name": "_sharp_endif"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_sharp_endif"
+            },
+            "named": true,
+            "value": "sharp_command_name"
           }
         ]
       }
@@ -405,8 +435,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_sharp_elif"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sharp_elif"
+          },
+          "named": true,
+          "value": "sharp_command_name"
         },
         {
           "type": "FIELD",
@@ -433,8 +468,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_sharp_else"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_sharp_else"
+          },
+          "named": true,
+          "value": "sharp_command_name"
         },
         {
           "type": "FIELD",

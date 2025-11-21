@@ -21,6 +21,7 @@ File (test="key") {
 
 (source_file
   (sharp_if_top_statement
+    (sharp_command_name)
     condition: (number)
     consequence: (section_statement
       name: (identifier)
@@ -45,11 +46,13 @@ File (test="key") {
         value: (string
           (at_reference)))
       (sharp_if_section_statement
+        (sharp_command_name)
         condition: (number)
         consequence: (key_value
           key: (identifier)
           value: (string
-            (at_reference))))
+            (at_reference)))
+        (sharp_command_name))
       (key_value
         key: (identifier)
         value: (string
@@ -62,7 +65,8 @@ File (test="key") {
         key: (identifier)
         value: (string
           (string_fragment)))
-      (identifier))))
+      (identifier))
+    (sharp_command_name)))
 
 ===================
 边界情况测试：未知键值对
