@@ -18,11 +18,23 @@
         },
         {
           "type": "SYMBOL",
-          "name": "sharp_if_top_statement"
+          "name": "file_section_statement"
         },
         {
           "type": "SYMBOL",
-          "name": "section_statement"
+          "name": "electrode_section_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "physics_section_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "plot_section_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "current_plot_section_statement"
         }
       ]
     },
@@ -40,6 +52,14 @@
         {
           "type": "SYMBOL",
           "name": "set_dep"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_if_elif"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_else_endif"
         }
       ]
     },
@@ -113,87 +133,23 @@
         }
       ]
     },
-    "sharp_if_top_statement": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_sharp_if"
-            },
-            "named": true,
-            "value": "sharp_command_name"
-          },
-          {
-            "type": "FIELD",
-            "name": "condition",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expr"
-            }
-          },
-          {
-            "type": "FIELD",
-            "name": "consequence",
-            "content": {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_statement"
-              }
-            }
-          },
-          {
-            "type": "REPEAT",
-            "content": {
-              "type": "FIELD",
-              "name": "alternative",
-              "content": {
-                "type": "SYMBOL",
-                "name": "sharp_elif_top_clause"
-              }
-            }
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "alternative",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "sharp_else_top_clause"
-                }
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_sharp_endif"
-            },
-            "named": true,
-            "value": "sharp_command_name"
-          }
-        ]
-      }
-    },
-    "sharp_elif_top_clause": {
+    "sharp_if_elif": {
       "type": "SEQ",
       "members": [
         {
           "type": "ALIAS",
           "content": {
-            "type": "SYMBOL",
-            "name": "_sharp_elif"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_sharp_if"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_sharp_elif"
+              }
+            ]
           },
           "named": true,
           "value": "sharp_command_name"
@@ -205,54 +161,251 @@
             "type": "SYMBOL",
             "name": "_expr"
           }
-        },
-        {
-          "type": "FIELD",
-          "name": "consequence",
-          "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_statement"
-            }
-          }
         }
       ]
     },
-    "sharp_else_top_clause": {
+    "sharp_else_endif": {
       "type": "SEQ",
       "members": [
         {
           "type": "ALIAS",
           "content": {
-            "type": "SYMBOL",
-            "name": "_sharp_else"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_sharp_else"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_sharp_endif"
+              }
+            ]
           },
           "named": true,
           "value": "sharp_command_name"
-        },
-        {
-          "type": "FIELD",
-          "name": "consequence",
-          "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_statement"
-            }
-          }
         }
       ]
     },
-    "section_statement": {
+    "file_section_statement": {
       "type": "SEQ",
       "members": [
         {
           "type": "FIELD",
           "name": "name",
           "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "File"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "_file_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_file_section_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "key_value"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_command_statement"
+        }
+      ]
+    },
+    "electrode_section_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "Electrode"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "electrode_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "electrode_section_member": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "key_value"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "sharp_command_statement"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_electrode_section_voltage_at_time_with_parentheses": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_electrode_section_voltage_at_time"
+              },
+              "named": true,
+              "value": "voltage_at_time"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_electrode_section_voltage_at_time"
+                    },
+                    "named": true,
+                    "value": "voltage_at_time"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_electrode_section_voltage_at_time": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "voltage",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "number"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_reference"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "at"
+        },
+        {
+          "type": "FIELD",
+          "name": "time",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "number"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_reference"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "physics_section_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "Physics"
+            }
           }
         },
         {
@@ -292,7 +445,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_section_member"
+            "name": "_physics_section_member"
           }
         },
         {
@@ -301,7 +454,7 @@
         }
       ]
     },
-    "_section_member": {
+    "_physics_section_member": {
       "type": "CHOICE",
       "members": [
         {
@@ -313,212 +466,144 @@
           "name": "key_value"
         },
         {
-          "type": "SYMBOL",
-          "name": "at_reference"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_physics_section_identifier_parentheses"
+          },
+          "named": true,
+          "value": "identifier_parentheses"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_physics_section_traps"
+          },
+          "named": true,
+          "value": "identifier_parentheses"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_physics_section_identifier_string"
+          },
+          "named": true,
+          "value": "identifier_string"
         },
         {
           "type": "SYMBOL",
-          "name": "at_angle_expression"
-        },
+          "name": "sharp_command_statement"
+        }
+      ]
+    },
+    "_physics_section_identifier_parentheses": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "SYMBOL",
-          "name": "at_square_expression"
+          "name": "identifier"
         },
         {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "args",
+          "content": {
+            "type": "REPEAT",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "key_value"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_physics_section_identifier_parentheses"
+                  },
+                  "named": true,
+                  "value": "identifier_parentheses"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "sharp_command_statement"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_physics_section_identifier_string": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "SYMBOL",
-          "name": "number"
+          "name": "identifier"
         },
         {
           "type": "SYMBOL",
           "name": "string"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "parentheses"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "square_brackets"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "braces"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "sharp_if_section_statement"
-        },
-        {
-          "type": "STRING",
-          "value": "/"
-        },
-        {
-          "type": "STRING",
-          "value": "-"
         }
       ]
     },
-    "sharp_if_section_statement": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_sharp_if"
-            },
-            "named": true,
-            "value": "sharp_command_name"
-          },
-          {
-            "type": "FIELD",
-            "name": "condition",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expr"
-            }
-          },
-          {
-            "type": "FIELD",
-            "name": "consequence",
-            "content": {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_section_member"
-              }
-            }
-          },
-          {
+    "_physics_section_traps": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "Traps"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "args",
+          "content": {
             "type": "REPEAT",
             "content": {
-              "type": "FIELD",
-              "name": "alternative",
-              "content": {
-                "type": "SYMBOL",
-                "name": "sharp_elif_section_clause"
-              }
-            }
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "alternative",
-                "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_physics_section_traps_member"
+                  },
+                  "named": true,
+                  "value": "traps_member"
+                },
+                {
                   "type": "SYMBOL",
-                  "name": "sharp_else_section_clause"
+                  "name": "sharp_command_statement"
                 }
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_sharp_endif"
-            },
-            "named": true,
-            "value": "sharp_command_name"
-          }
-        ]
-      }
-    },
-    "sharp_elif_section_clause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_sharp_elif"
-          },
-          "named": true,
-          "value": "sharp_command_name"
-        },
-        {
-          "type": "FIELD",
-          "name": "condition",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_expr"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "consequence",
-          "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_section_member"
+              ]
             }
           }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
-    "sharp_else_section_clause": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_sharp_else"
-          },
-          "named": true,
-          "value": "sharp_command_name"
-        },
-        {
-          "type": "FIELD",
-          "name": "consequence",
-          "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_section_member"
-            }
-          }
-        }
-      ]
-    },
-    "key_value": {
-      "type": "PREC_LEFT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "FIELD",
-            "name": "key",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_section_member"
-            }
-          },
-          {
-            "type": "STRING",
-            "value": "="
-          },
-          {
-            "type": "FIELD",
-            "name": "value",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_section_member"
-            }
-          }
-        ]
-      }
-    },
-    "parentheses": {
+    "_physics_section_traps_member": {
       "type": "SEQ",
       "members": [
         {
@@ -528,27 +613,28 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SEQ",
+            "type": "CHOICE",
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_section_member"
+                "name": "identifier"
               },
               {
-                "type": "REPEAT",
+                "type": "SYMBOL",
+                "name": "key_value"
+              },
+              {
+                "type": "ALIAS",
                 "content": {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_section_member"
-                    }
-                  ]
-                }
+                  "type": "SYMBOL",
+                  "name": "_physics_section_identifier_parentheses"
+                },
+                "named": true,
+                "value": "identifier_parentheses"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "sharp_command_statement"
               }
             ]
           }
@@ -559,9 +645,193 @@
         }
       ]
     },
-    "square_brackets": {
+    "plot_section_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "Plot"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_plot_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_plot_section_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "STRING",
+              "value": "/"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_command_statement"
+        }
+      ]
+    },
+    "current_plot_section_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "CurrentPlot"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_current_plot_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_current_plot_section_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_current_plot_identifier_parentheses"
+          },
+          "named": true,
+          "value": "identifier_parentheses"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_command_statement"
+        }
+      ]
+    },
+    "_current_plot_identifier_parentheses": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "key_value"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_current_plot_position"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_current_plot_identifier_windows"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_current_plot_identifier_parentheses"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_current_plot_position": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "number"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_current_plot_identifier_windows": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "Window"
+        },
         {
           "type": "STRING",
           "value": "["
@@ -569,29 +839,8 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_section_member"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_section_member"
-                    }
-                  ]
-                }
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_current_plot_position"
           }
         },
         {
@@ -600,44 +849,57 @@
         }
       ]
     },
-    "braces": {
+    "key_value": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "key",
           "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_section_member"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": ","
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "_section_member"
-                    }
-                  ]
-                }
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "identifier"
           }
         },
         {
           "type": "STRING",
-          "value": "}"
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "number"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_reference"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_angle_expression"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_square_expression"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_electrode_section_voltage_at_time_with_parentheses"
+              }
+            ]
+          }
         }
       ]
     },

@@ -37,7 +37,7 @@ module.exports = grammar({
     $._sharp_endif,
     $.comment, // 外部扫描器处理的注释
   ],
-  extras: ($) => [$._whitespace, $.comment, $.tcl_block], // 仅保留空白作为 extras
+  extras: ($) => [$._whitespace, $.comment, $.tcl_block],
 
   rules: {
     // TODO: add the actual grammar rules
@@ -46,13 +46,22 @@ module.exports = grammar({
     _statement: ($) =>
       choice(
         $.sharp_command_statement,
-        $.sharp_if_top_statement,
-        $.section_statement,
+        $.file_section_statement,
+        $.electrode_section_statement,
+        $.physics_section_statement,
+        $.plot_section_statement,
+        $.current_plot_section_statement,
       ),
 
     // sharp_command_statement
     sharp_command_statement: ($) =>
-      choice($.define_micro, $.undefine_macro, $.set_dep),
+      choice(
+        $.define_micro,
+        $.undefine_macro,
+        $.set_dep,
+        $.sharp_if_elif,
+        $.sharp_else_endif,
+      ),
     define_micro: ($) =>
       seq(
         alias($._sharp_define, $.sharp_command_name), // 使用外部扫描器生成的 token
@@ -66,91 +75,194 @@ module.exports = grammar({
       ), // 使用外部扫描器生成的 token
     set_dep: ($) =>
       seq(alias($._sharp_setdep, $.sharp_command_name), $.at_reference), // 使用外部扫描器生成的 token
-
-    // sharp_if_top_statement
-    sharp_if_top_statement: ($) =>
-      prec.right(
-        seq(
-          alias($._sharp_if, $.sharp_command_name),
-          field("condition", $._expr),
-          field("consequence", repeat($._statement)),
-          repeat(field("alternative", $.sharp_elif_top_clause)),
-          optional(field("alternative", $.sharp_else_top_clause)),
-          alias($._sharp_endif, $.sharp_command_name),
-        ),
-      ),
-    sharp_elif_top_clause: ($) =>
+    sharp_if_elif: ($) =>
       seq(
-        alias($._sharp_elif, $.sharp_command_name),
+        alias(choice($._sharp_if, $._sharp_elif), $.sharp_command_name),
         field("condition", $._expr),
-        field("consequence", repeat($._statement)),
       ),
-    sharp_else_top_clause: ($) =>
-      seq(
-        alias($._sharp_else, $.sharp_command_name),
-        field("consequence", repeat($._statement)),
-      ),
+    sharp_else_endif: ($) =>
+      seq(alias(choice($._sharp_else, $._sharp_endif), $.sharp_command_name)),
 
-    section_statement: ($) =>
+    // File Section
+    file_section_statement: ($) =>
       seq(
-        field("name", $.identifier),
-        optional(seq("(", field("range", $.key_value), ")")),
+        field("name", token.immediate("File")),
         "{",
-        repeat($._section_member),
+        repeat($._file_section_member),
         "}",
       ),
-    _section_member: ($) =>
+    _file_section_member: ($) =>
+      choice($.identifier, $.key_value, $.sharp_command_statement),
+
+    // Electrode Section
+    electrode_section_statement: ($) =>
+      seq(
+        field("name", token.immediate("Electrode")),
+        "{",
+        repeat($.electrode_section_member),
+        "}",
+      ),
+    electrode_section_member: ($) =>
+      seq("{", repeat(choice($.key_value, $.sharp_command_statement)), "}"),
+    _electrode_section_voltage_at_time_with_parentheses: ($) =>
+      seq(
+        "(",
+        commaSep1(
+          alias($._electrode_section_voltage_at_time, $.voltage_at_time),
+        ),
+        ")",
+      ),
+    _electrode_section_voltage_at_time: ($) =>
+      seq(
+        field("voltage", choice($.number, $.identifier, $.at_reference)),
+        "at",
+        field("time", choice($.number, $.identifier, $.at_reference)),
+      ),
+
+    // Physics Section
+    physics_section_statement: ($) =>
+      seq(
+        field("name", token.immediate("Physics")),
+        optional(seq("(", field("range", $.key_value), ")")),
+        "{",
+        repeat($._physics_section_member),
+        "}",
+      ),
+    _physics_section_member: ($) =>
       choice(
         $.identifier,
         $.key_value,
-        $.at_reference,
-        $.at_angle_expression,
-        $.at_square_expression,
-        $.number,
-        $.string,
-        $.parentheses,
-        $.square_brackets,
-        $.braces,
-        $.sharp_if_section_statement,
-        "/",
-        "-",
-      ),
-    // sharp_if_section_statement
-    sharp_if_section_statement: ($) =>
-      prec.right(
-        seq(
-          alias($._sharp_if, $.sharp_command_name),
-          field("condition", $._expr),
-          field("consequence", repeat($._section_member)),
-          repeat(field("alternative", $.sharp_elif_section_clause)),
-          optional(field("alternative", $.sharp_else_section_clause)),
-          alias($._sharp_endif, $.sharp_command_name),
+        alias(
+          $._physics_section_identifier_parentheses,
+          $.identifier_parentheses,
         ),
+        alias($._physics_section_traps, $.identifier_parentheses),
+        alias($._physics_section_identifier_string, $.identifier_string),
+        $.sharp_command_statement,
       ),
-    sharp_elif_section_clause: ($) =>
+    _physics_section_identifier_parentheses: ($) =>
       seq(
-        alias($._sharp_elif, $.sharp_command_name),
-        field("condition", $._expr),
-        field("consequence", repeat($._section_member)),
+        $.identifier,
+        "(",
+        field(
+          "args",
+          repeat(
+            choice(
+              $.identifier,
+              $.key_value,
+              alias(
+                $._physics_section_identifier_parentheses,
+                $.identifier_parentheses,
+              ),
+              $.sharp_command_statement,
+            ),
+          ),
+        ),
+        ")",
       ),
-    sharp_else_section_clause: ($) =>
+    _physics_section_identifier_string: ($) => seq($.identifier, $.string),
+    _physics_section_traps: ($) =>
       seq(
-        alias($._sharp_else, $.sharp_command_name),
-        field("consequence", repeat($._section_member)),
+        "Traps",
+        "(",
+        field(
+          "args",
+          repeat(
+            choice(
+              alias($._physics_section_traps_member, $.traps_member),
+              $.sharp_command_statement,
+            ),
+          ),
+        ),
+        ")",
       ),
+    _physics_section_traps_member: ($) =>
+      seq(
+        "(",
+        repeat(
+          choice(
+            $.identifier,
+            $.key_value,
+            alias(
+              $._physics_section_identifier_parentheses,
+              $.identifier_parentheses,
+            ),
+            $.sharp_command_statement,
+          ),
+        ),
+        ")",
+      ),
+
+    // Plot Section
+    plot_section_statement: ($) =>
+      seq(
+        field("name", token.immediate("Plot")),
+        "{",
+        repeat($._plot_section_member),
+        "}",
+      ),
+    _plot_section_member: ($) =>
+      choice(
+        $.identifier,
+        seq($.identifier, "/", $.identifier),
+        $.sharp_command_statement,
+      ),
+
+    // Plot Section
+    current_plot_section_statement: ($) =>
+      seq(
+        field("name", token.immediate("CurrentPlot")),
+        "{",
+        repeat($._current_plot_section_member),
+        "}",
+      ),
+    _current_plot_section_member: ($) =>
+      choice(
+        alias($._current_plot_identifier_parentheses, $.identifier_parentheses),
+        $.sharp_command_statement,
+      ),
+    _current_plot_identifier_parentheses: ($) =>
+      seq(
+        $.identifier,
+        "(",
+        repeat(
+          choice(
+            $.key_value,
+            $._current_plot_position,
+            $._current_plot_identifier_windows,
+            $._current_plot_identifier_parentheses,
+            $.sharp_command_statement,
+          ),
+        ),
+        ")",
+      ),
+    _current_plot_position: ($) =>
+      seq("(", repeat(choice($.number, $.identifier)), ")"),
+    _current_plot_identifier_windows: ($) =>
+      seq("Window", "[", repeat($._current_plot_position), "]"),
+
+    // TODO: 完成Math Section 与 Solve Section
+
+    // parentheses: ($) => seq("(", repeat(commaSep1($._section_member)), ")"),
+    // square_brackets: ($) => seq("[", repeat(commaSep1($._section_member)), "]"),
+    // braces: ($) => seq("{", repeat(commaSep1($._section_member)), "}"),
     key_value: ($) =>
-      prec.left(
-        seq(
-          field("key", $._section_member),
-          "=",
-          field("value", $._section_member),
+      seq(
+        field("key", $.identifier),
+        "=",
+        field(
+          "value",
+          choice(
+            $.identifier,
+            $.number,
+            $.string,
+            $.at_reference,
+            $.at_angle_expression,
+            $.at_square_expression,
+            $._electrode_section_voltage_at_time_with_parentheses,
+          ),
         ),
       ),
-
-    parentheses: ($) => seq("(", repeat(commaSep1($._section_member)), ")"),
-    square_brackets: ($) => seq("[", repeat(commaSep1($._section_member)), "]"),
-    braces: ($) => seq("{", repeat(commaSep1($._section_member)), "}"),
-
     tcl_block: ($) =>
       prec(
         10,

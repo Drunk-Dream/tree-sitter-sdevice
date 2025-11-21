@@ -3,7 +3,7 @@ File Section
 ===================
 
 #if 1
-File (test="key") {
+File {
     Grid    = "@tdr@"
     DevFields = "n@node|fastTrap@_fastTrap_@fTime@_des.tdr"
     Parameter = "@parameter@"
@@ -20,53 +20,54 @@ File (test="key") {
 ---
 
 (source_file
-  (sharp_if_top_statement
-    (sharp_command_name)
-    condition: (number)
-    consequence: (section_statement
-      name: (identifier)
-      range: (key_value
-        key: (identifier)
-        value: (string
-          (string_fragment)))
-      (key_value
-        key: (identifier)
-        value: (string
-          (at_reference)))
-      (key_value
-        key: (identifier)
-        value: (string
-          (string_fragment)
-          (at_reference)
-          (string_fragment)
-          (at_reference)
-          (string_fragment)))
-      (key_value
-        key: (identifier)
-        value: (string
-          (at_reference)))
-      (sharp_if_section_statement
+  (sharp_command_statement
+    (sharp_if_elif
+      (sharp_command_name)
+      condition: (number)))
+  (file_section_statement
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (string_fragment)
+        (at_reference)
+        (string_fragment)
+        (at_reference)
+        (string_fragment)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (sharp_command_statement
+      (sharp_if_elif
         (sharp_command_name)
-        condition: (number)
-        consequence: (key_value
-          key: (identifier)
-          value: (string
-            (at_reference)))
-        (sharp_command_name))
-      (key_value
-        key: (identifier)
-        value: (string
-          (at_reference)))
-      (key_value
-        key: (identifier)
-        value: (string
-          (at_reference)))
-      (key_value
-        key: (identifier)
-        value: (string
-          (string_fragment)))
-      (identifier))
-    (sharp_command_name)))
+        condition: (number)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (sharp_command_statement
+      (sharp_else_endif
+        (sharp_command_name)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (at_reference)))
+    (key_value
+      key: (identifier)
+      value: (string
+        (string_fragment)))
+    (identifier))
+  (sharp_command_statement
+    (sharp_else_endif
+      (sharp_command_name))))
 
 ===================
 边界情况测试：未知键值对
@@ -80,8 +81,7 @@ File {
 ---
 
 (source_file
-  (section_statement
-    name: (identifier)
+  (file_section_statement
     (key_value
       key: (identifier)
       value: (string
@@ -103,8 +103,7 @@ File {
 ---
 
 (source_file
-  (section_statement
-    name: (identifier)
+  (file_section_statement
     (key_value
       key: (identifier)
       value: (string
@@ -124,8 +123,7 @@ File {
 ---
 
 (source_file
-  (section_statement
-    name: (identifier)
+  (file_section_statement
     (key_value
       key: (identifier)
       value: (string

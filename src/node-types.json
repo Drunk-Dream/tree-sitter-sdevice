@@ -133,61 +133,6 @@
     }
   },
   {
-    "type": "braces",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "at_angle_expression",
-          "named": true
-        },
-        {
-          "type": "at_reference",
-          "named": true
-        },
-        {
-          "type": "at_square_expression",
-          "named": true
-        },
-        {
-          "type": "braces",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "key_value",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parentheses",
-          "named": true
-        },
-        {
-          "type": "sharp_if_section_statement",
-          "named": true
-        },
-        {
-          "type": "square_brackets",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "command",
     "named": true,
     "fields": {
@@ -271,6 +216,36 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "current_plot_section_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "CurrentPlot",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -366,129 +341,7 @@
     }
   },
   {
-    "type": "key_value",
-    "named": true,
-    "fields": {
-      "key": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "braces",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "key_value",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parentheses",
-            "named": true
-          },
-          {
-            "type": "sharp_if_section_statement",
-            "named": true
-          },
-          {
-            "type": "square_brackets",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "braces",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "key_value",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parentheses",
-            "named": true
-          },
-          {
-            "type": "sharp_if_section_statement",
-            "named": true
-          },
-          {
-            "type": "square_brackets",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "parentheses",
+    "type": "electrode_section_member",
     "named": true,
     "fields": {},
     "children": {
@@ -496,21 +349,111 @@
       "required": false,
       "types": [
         {
-          "type": "at_angle_expression",
+          "type": "key_value",
           "named": true
         },
         {
-          "type": "at_reference",
+          "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "electrode_section_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "Electrode",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "electrode_section_member",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "file_section_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "File",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "at_square_expression",
+          "type": "key_value",
           "named": true
         },
         {
-          "type": "braces",
+          "type": "sharp_command_statement",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_parentheses",
+    "named": true,
+    "fields": {
+      "args": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "identifier_parentheses",
+            "named": true
+          },
+          {
+            "type": "key_value",
+            "named": true
+          },
+          {
+            "type": "sharp_command_statement",
+            "named": true
+          },
+          {
+            "type": "traps_member",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
         {
           "type": "identifier",
           "named": true
@@ -522,17 +465,20 @@
         {
           "type": "number",
           "named": true
-        },
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
         {
-          "type": "parentheses",
-          "named": true
-        },
-        {
-          "type": "sharp_if_section_statement",
-          "named": true
-        },
-        {
-          "type": "square_brackets",
+          "type": "identifier",
           "named": true
         },
         {
@@ -543,7 +489,69 @@
     }
   },
   {
-    "type": "section_statement",
+    "type": "key_value",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "at_angle_expression",
+            "named": true
+          },
+          {
+            "type": "at_reference",
+            "named": true
+          },
+          {
+            "type": "at_square_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "voltage_at_time",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "physics_section_statement",
     "named": true,
     "fields": {
       "name": {
@@ -551,8 +559,8 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
-            "named": true
+            "type": "Physics",
+            "named": false
           }
         ]
       },
@@ -572,23 +580,15 @@
       "required": false,
       "types": [
         {
-          "type": "at_angle_expression",
-          "named": true
-        },
-        {
-          "type": "at_reference",
-          "named": true
-        },
-        {
-          "type": "at_square_expression",
-          "named": true
-        },
-        {
-          "type": "braces",
-          "named": true
-        },
-        {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "identifier_string",
           "named": true
         },
         {
@@ -596,23 +596,37 @@
           "named": true
         },
         {
-          "type": "number",
+          "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "plot_section_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "Plot",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "parentheses",
-          "named": true
-        },
-        {
-          "type": "sharp_if_section_statement",
-          "named": true
-        },
-        {
-          "type": "square_brackets",
-          "named": true
-        },
-        {
-          "type": "string",
+          "type": "sharp_command_statement",
           "named": true
         }
       ]
@@ -654,6 +668,14 @@
           "named": true
         },
         {
+          "type": "sharp_else_endif",
+          "named": true
+        },
+        {
+          "type": "sharp_if_elif",
+          "named": true
+        },
+        {
           "type": "undefine_macro",
           "named": true
         }
@@ -661,7 +683,22 @@
     }
   },
   {
-    "type": "sharp_elif_section_clause",
+    "type": "sharp_else_endif",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "sharp_command_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "sharp_if_elif",
     "named": true,
     "fields": {
       "condition": {
@@ -729,544 +766,10 @@
             "named": true
           }
         ]
-      },
-      "consequence": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "braces",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "key_value",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parentheses",
-            "named": true
-          },
-          {
-            "type": "sharp_if_section_statement",
-            "named": true
-          },
-          {
-            "type": "square_brackets",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
       "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "sharp_command_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sharp_elif_top_clause",
-    "named": true,
-    "fields": {
-      "condition": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "binop_expr",
-            "named": true
-          },
-          {
-            "type": "command",
-            "named": true
-          },
-          {
-            "type": "escape_sequence",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "ternary_expr",
-            "named": true
-          },
-          {
-            "type": "unary_expr",
-            "named": true
-          }
-        ]
-      },
-      "consequence": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "section_statement",
-            "named": true
-          },
-          {
-            "type": "sharp_command_statement",
-            "named": true
-          },
-          {
-            "type": "sharp_if_top_statement",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "sharp_command_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sharp_else_section_clause",
-    "named": true,
-    "fields": {
-      "consequence": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "braces",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "key_value",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parentheses",
-            "named": true
-          },
-          {
-            "type": "sharp_if_section_statement",
-            "named": true
-          },
-          {
-            "type": "square_brackets",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "sharp_command_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sharp_else_top_clause",
-    "named": true,
-    "fields": {
-      "consequence": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "section_statement",
-            "named": true
-          },
-          {
-            "type": "sharp_command_statement",
-            "named": true
-          },
-          {
-            "type": "sharp_if_top_statement",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "sharp_command_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sharp_if_section_statement",
-    "named": true,
-    "fields": {
-      "alternative": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "sharp_elif_section_clause",
-            "named": true
-          },
-          {
-            "type": "sharp_else_section_clause",
-            "named": true
-          }
-        ]
-      },
-      "condition": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "binop_expr",
-            "named": true
-          },
-          {
-            "type": "command",
-            "named": true
-          },
-          {
-            "type": "escape_sequence",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "ternary_expr",
-            "named": true
-          },
-          {
-            "type": "unary_expr",
-            "named": true
-          }
-        ]
-      },
-      "consequence": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "-",
-            "named": false
-          },
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "braces",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "key_value",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parentheses",
-            "named": true
-          },
-          {
-            "type": "sharp_if_section_statement",
-            "named": true
-          },
-          {
-            "type": "square_brackets",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "sharp_command_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sharp_if_top_statement",
-    "named": true,
-    "fields": {
-      "alternative": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "sharp_elif_top_clause",
-            "named": true
-          },
-          {
-            "type": "sharp_else_top_clause",
-            "named": true
-          }
-        ]
-      },
-      "condition": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
-            "type": "at_angle_expression",
-            "named": true
-          },
-          {
-            "type": "at_reference",
-            "named": true
-          },
-          {
-            "type": "at_square_expression",
-            "named": true
-          },
-          {
-            "type": "binop_expr",
-            "named": true
-          },
-          {
-            "type": "command",
-            "named": true
-          },
-          {
-            "type": "escape_sequence",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "ternary_expr",
-            "named": true
-          },
-          {
-            "type": "unary_expr",
-            "named": true
-          }
-        ]
-      },
-      "consequence": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "section_statement",
-            "named": true
-          },
-          {
-            "type": "sharp_command_statement",
-            "named": true
-          },
-          {
-            "type": "sharp_if_top_statement",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
       "required": true,
       "types": [
         {
@@ -1286,70 +789,27 @@
       "required": false,
       "types": [
         {
-          "type": "section_statement",
+          "type": "current_plot_section_statement",
+          "named": true
+        },
+        {
+          "type": "electrode_section_statement",
+          "named": true
+        },
+        {
+          "type": "file_section_statement",
+          "named": true
+        },
+        {
+          "type": "physics_section_statement",
+          "named": true
+        },
+        {
+          "type": "plot_section_statement",
           "named": true
         },
         {
           "type": "sharp_command_statement",
-          "named": true
-        },
-        {
-          "type": "sharp_if_top_statement",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "square_brackets",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "at_angle_expression",
-          "named": true
-        },
-        {
-          "type": "at_reference",
-          "named": true
-        },
-        {
-          "type": "at_square_expression",
-          "named": true
-        },
-        {
-          "type": "braces",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "key_value",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parentheses",
-          "named": true
-        },
-        {
-          "type": "sharp_if_section_statement",
-          "named": true
-        },
-        {
-          "type": "square_brackets",
-          "named": true
-        },
-        {
-          "type": "string",
           "named": true
         }
       ]
@@ -1519,6 +979,33 @@
     }
   },
   {
+    "type": "traps_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "key_value",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "unary_expr",
     "named": true,
     "fields": {},
@@ -1597,6 +1084,48 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "voltage_at_time",
+    "named": true,
+    "fields": {
+      "time": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "at_reference",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "voltage": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "at_reference",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1716,6 +1245,34 @@
     "named": false
   },
   {
+    "type": "CurrentPlot",
+    "named": false
+  },
+  {
+    "type": "Electrode",
+    "named": false
+  },
+  {
+    "type": "File",
+    "named": false
+  },
+  {
+    "type": "Physics",
+    "named": false
+  },
+  {
+    "type": "Plot",
+    "named": false
+  },
+  {
+    "type": "Traps",
+    "named": false
+  },
+  {
+    "type": "Window",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -1725,6 +1282,10 @@
   },
   {
     "type": "^",
+    "named": false
+  },
+  {
+    "type": "at",
     "named": false
   },
   {
