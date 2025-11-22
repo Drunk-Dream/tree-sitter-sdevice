@@ -4,7 +4,7 @@ endif
 
 LANGUAGE_NAME := tree-sitter-sdevice
 HOMEPAGE_URL := https://github.com/Drunk-Dream/tree-sitter-sdevice
-VERSION := 0.0.8
+VERSION := 0.0.9
 
 # repository
 SRC_DIR := src
