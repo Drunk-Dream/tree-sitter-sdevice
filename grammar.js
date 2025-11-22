@@ -50,6 +50,8 @@ module.exports = grammar({
         $.electrode_section_statement,
         $.physics_section_statement,
         $.plot_section_statement,
+        $.math_section_statement,
+        $.solve_section_statement,
         $.current_plot_section_statement,
       ),
 
@@ -103,7 +105,17 @@ module.exports = grammar({
         "}",
       ),
     electrode_section_member: ($) =>
-      seq("{", repeat(choice($.key_value, $.sharp_command_statement)), "}"),
+      seq(
+        "{",
+        repeat(
+          choice(
+            $.key_value,
+            alias($._electrode_section_key_value, $.key_value),
+            $.sharp_command_statement,
+          ),
+        ),
+        "}",
+      ),
     _electrode_section_voltage_at_time_with_parentheses: ($) =>
       seq(
         "(",
@@ -118,7 +130,15 @@ module.exports = grammar({
         "at",
         field("time", choice($.number, $.identifier, $.at_reference)),
       ),
-
+    _electrode_section_key_value: ($) =>
+      seq(
+        field("key", $.identifier),
+        "=",
+        field(
+          "value",
+          choice($._electrode_section_voltage_at_time_with_parentheses),
+        ),
+      ),
     // Physics Section
     physics_section_statement: ($) =>
       seq(
@@ -228,8 +248,8 @@ module.exports = grammar({
         repeat(
           choice(
             $.key_value,
-            $._current_plot_position,
-            $._current_plot_identifier_windows,
+            alias($._current_plot_position, $.position),
+            alias($._current_plot_identifier_windows, $.window),
             $._current_plot_identifier_parentheses,
             $.sharp_command_statement,
           ),
@@ -241,7 +261,130 @@ module.exports = grammar({
     _current_plot_identifier_windows: ($) =>
       seq("Window", "[", repeat($._current_plot_position), "]"),
 
-    // TODO: 完成Math Section 与 Solve Section
+    // Math Section
+    math_section_statement: ($) =>
+      seq(
+        field("name", token.immediate("Math")),
+        optional(seq("(", field("range", $.key_value), ")")),
+        "{",
+        repeat($._math_section_member),
+        "}",
+      ),
+    _math_section_member: ($) =>
+      choice(
+        $.identifier,
+        seq("-", $._math_section_member),
+        alias($._math_section_key_value, $.key_value),
+        alias($._math_section_identifier_parentheses, $.identifier_parentheses),
+        alias(
+          $._math_section_identifier_string_parentheses,
+          $.identifier_string_parentheses,
+        ),
+        $.sharp_command_statement,
+      ),
+    _math_section_identifier_parentheses: ($) =>
+      seq($.identifier, "(", repeat($._math_section_member), ")"),
+    _math_section_identifier_string_parentheses: ($) =>
+      seq($.identifier, $.string, "(", repeat($._math_section_member), ")"),
+    _math_section_key_value: ($) =>
+      seq(
+        field(
+          "key",
+          choice(
+            $.identifier,
+            alias(
+              $._math_section_identifier_parentheses,
+              $.identifier_parentheses,
+            ),
+          ),
+        ),
+        "=",
+        field(
+          "value",
+          choice(
+            $.identifier,
+            $.number,
+            $.string,
+            $.at_reference,
+            $.at_angle_expression,
+            $.at_square_expression,
+          ),
+        ),
+      ),
+
+    // Solve Section
+    solve_section_statement: ($) =>
+      seq("Solve", "{", repeat($._solve_section_member), "}"),
+    _solve_section_member: ($) =>
+      choice(
+        $.identifier,
+        $.key_value,
+        seq("-", $._solve_section_member),
+        alias($._solve_section_key_value, $.key_value),
+        alias(
+          $._solve_section_identifier_parentheses,
+          $.identifier_parentheses,
+        ),
+        alias(
+          $._solve_section_identifier_parentheses_braces,
+          $.identifier_parentheses_braces,
+        ),
+        $.sharp_command_statement,
+      ),
+    _solve_section_identifier_parentheses: ($) =>
+      seq($.identifier, "(", repeat($._solve_section_member), ")"),
+    _solve_section_identifier_parentheses_braces: ($) =>
+      seq(
+        $.identifier,
+        optional(seq("(", repeat($._solve_section_member), ")")),
+        "{",
+        repeat($._solve_section_member),
+        "}",
+      ),
+    _solve_section_key_value: ($) =>
+      seq(
+        field("key", $.identifier),
+        "=",
+        field("value", $._solve_section_time_statement),
+      ),
+    _solve_section_time_statement: ($) =>
+      seq(
+        "(",
+        repeat($._solve_section_time_member),
+        optional(repeat(seq(";", repeat($._solve_section_time_member)))),
+        ")",
+      ),
+    _solve_section_time_member: ($) =>
+      choice(
+        $.number,
+        $.identifier,
+        $.at_reference,
+        $.at_angle_expression,
+        $.at_square_expression,
+        $.key_value,
+        alias($._solve_section_time_range_statement, $.time_range),
+      ),
+    _solve_section_time_range_statement: ($) =>
+      seq(
+        token.immediate("range"),
+        "=",
+        "(",
+        choice(
+          $.number,
+          $.identifier,
+          $.at_reference,
+          $.at_angle_expression,
+          $.at_square_expression,
+        ),
+        choice(
+          $.number,
+          $.identifier,
+          $.at_reference,
+          $.at_angle_expression,
+          $.at_square_expression,
+        ),
+        ")",
+      ),
 
     // parentheses: ($) => seq("(", repeat(commaSep1($._section_member)), ")"),
     // square_brackets: ($) => seq("[", repeat(commaSep1($._section_member)), "]"),
@@ -259,7 +402,6 @@ module.exports = grammar({
             $.at_reference,
             $.at_angle_expression,
             $.at_square_expression,
-            $._electrode_section_voltage_at_time_with_parentheses,
           ),
         ),
       ),

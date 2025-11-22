@@ -34,6 +34,14 @@
         },
         {
           "type": "SYMBOL",
+          "name": "math_section_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "solve_section_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "current_plot_section_statement"
         }
       ]
@@ -283,6 +291,15 @@
                 "name": "key_value"
               },
               {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_electrode_section_key_value"
+                },
+                "named": true,
+                "value": "key_value"
+              },
+              {
                 "type": "SYMBOL",
                 "name": "sharp_command_statement"
               }
@@ -388,6 +405,36 @@
               {
                 "type": "SYMBOL",
                 "name": "at_reference"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "_electrode_section_key_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_electrode_section_voltage_at_time_with_parentheses"
               }
             ]
           }
@@ -776,16 +823,30 @@
                 "name": "key_value"
               },
               {
-                "type": "SYMBOL",
-                "name": "_current_plot_position"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_current_plot_position"
+                },
+                "named": true,
+                "value": "position"
               },
               {
-                "type": "SYMBOL",
-                "name": "_current_plot_identifier_windows"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_current_plot_identifier_windows"
+                },
+                "named": true,
+                "value": "window"
               },
               {
                 "type": "SYMBOL",
                 "name": "_current_plot_identifier_parentheses"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "sharp_command_statement"
               }
             ]
           }
@@ -849,6 +910,576 @@
         }
       ]
     },
+    "math_section_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "Math"
+            }
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "FIELD",
+                  "name": "range",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "key_value"
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_math_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_math_section_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_math_section_member"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_math_section_key_value"
+          },
+          "named": true,
+          "value": "key_value"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_math_section_identifier_parentheses"
+          },
+          "named": true,
+          "value": "identifier_parentheses"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_math_section_identifier_string_parentheses"
+          },
+          "named": true,
+          "value": "identifier_string_parentheses"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_command_statement"
+        }
+      ]
+    },
+    "_math_section_identifier_parentheses": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_math_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_math_section_identifier_string_parentheses": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_math_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_math_section_key_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_math_section_identifier_parentheses"
+                },
+                "named": true,
+                "value": "identifier_parentheses"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "number"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_reference"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_angle_expression"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "at_square_expression"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "solve_section_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "Solve"
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_solve_section_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "key_value"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_solve_section_member"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_key_value"
+          },
+          "named": true,
+          "value": "key_value"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_identifier_parentheses"
+          },
+          "named": true,
+          "value": "identifier_parentheses"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_identifier_parentheses_braces"
+          },
+          "named": true,
+          "value": "identifier_parentheses_braces"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_command_statement"
+        }
+      ]
+    },
+    "_solve_section_identifier_parentheses": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_solve_section_identifier_parentheses_braces": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_solve_section_member"
+                  }
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_member"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
+    },
+    "_solve_section_key_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_time_statement"
+          }
+        }
+      ]
+    },
+    "_solve_section_time_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_time_member"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ";"
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_solve_section_time_member"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_solve_section_time_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "at_reference"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "at_angle_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "at_square_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "key_value"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_solve_section_time_range_statement"
+          },
+          "named": true,
+          "value": "time_range"
+        }
+      ]
+    },
+    "_solve_section_time_range_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "range"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "number"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "at_reference"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "at_angle_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "at_square_expression"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "number"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "at_reference"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "at_angle_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "at_square_expression"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "key_value": {
       "type": "SEQ",
       "members": [
@@ -893,10 +1524,6 @@
               {
                 "type": "SYMBOL",
                 "name": "at_square_expression"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_electrode_section_voltage_at_time_with_parentheses"
               }
             ]
           }

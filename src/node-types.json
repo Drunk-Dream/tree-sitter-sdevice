@@ -459,11 +459,62 @@
           "named": true
         },
         {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses_braces",
+          "named": true
+        },
+        {
+          "type": "identifier_string_parentheses",
+          "named": true
+        },
+        {
           "type": "key_value",
           "named": true
         },
         {
-          "type": "number",
+          "type": "position",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
+          "named": true
+        },
+        {
+          "type": "window",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_parentheses_braces",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses_braces",
+          "named": true
+        },
+        {
+          "type": "key_value",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
           "named": true
         }
       ]
@@ -489,6 +540,41 @@
     }
   },
   {
+    "type": "identifier_string_parentheses",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "identifier_string_parentheses",
+          "named": true
+        },
+        {
+          "type": "key_value",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "key_value",
     "named": true,
     "fields": {
@@ -498,6 +584,10 @@
         "types": [
           {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "identifier_parentheses",
             "named": true
           }
         ]
@@ -519,6 +609,10 @@
             "named": false
           },
           {
+            "type": ";",
+            "named": false
+          },
+          {
             "type": "at_angle_expression",
             "named": true
           },
@@ -535,6 +629,10 @@
             "named": true
           },
           {
+            "type": "key_value",
+            "named": true
+          },
+          {
             "type": "number",
             "named": true
           },
@@ -543,11 +641,67 @@
             "named": true
           },
           {
+            "type": "time_range",
+            "named": true
+          },
+          {
             "type": "voltage_at_time",
             "named": true
           }
         ]
       }
+    }
+  },
+  {
+    "type": "math_section_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "Math",
+            "named": false
+          }
+        ]
+      },
+      "range": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "key_value",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "identifier_string_parentheses",
+          "named": true
+        },
+        {
+          "type": "key_value",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -627,6 +781,25 @@
         },
         {
           "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "position",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
           "named": true
         }
       ]
@@ -780,6 +953,37 @@
     }
   },
   {
+    "type": "solve_section_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses_braces",
+          "named": true
+        },
+        {
+          "type": "key_value",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -801,6 +1005,10 @@
           "named": true
         },
         {
+          "type": "math_section_statement",
+          "named": true
+        },
+        {
           "type": "physics_section_statement",
           "named": true
         },
@@ -810,6 +1018,10 @@
         },
         {
           "type": "sharp_command_statement",
+          "named": true
+        },
+        {
+          "type": "solve_section_statement",
           "named": true
         }
       ]
@@ -979,6 +1191,37 @@
     }
   },
   {
+    "type": "time_range",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_angle_expression",
+          "named": true
+        },
+        {
+          "type": "at_reference",
+          "named": true
+        },
+        {
+          "type": "at_square_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "traps_member",
     "named": true,
     "fields": {},
@@ -1129,6 +1372,25 @@
     }
   },
   {
+    "type": "window",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "!",
     "named": false
   },
@@ -1201,6 +1463,10 @@
     "named": false
   },
   {
+    "type": ";",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
@@ -1257,11 +1523,19 @@
     "named": false
   },
   {
+    "type": "Math",
+    "named": false
+  },
+  {
     "type": "Physics",
     "named": false
   },
   {
     "type": "Plot",
+    "named": false
+  },
+  {
+    "type": "Solve",
     "named": false
   },
   {
@@ -1336,6 +1610,10 @@
   {
     "type": "number_format",
     "named": true
+  },
+  {
+    "type": "range",
+    "named": false
   },
   {
     "type": "sharp_command_name",
