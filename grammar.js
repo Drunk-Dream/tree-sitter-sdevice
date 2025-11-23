@@ -119,7 +119,7 @@ module.exports = grammar({
     _electrode_section_voltage_at_time_with_parentheses: ($) =>
       seq(
         "(",
-        commaSep1(
+        commaSep(
           alias($._electrode_section_voltage_at_time, $.voltage_at_time),
         ),
         ")",
@@ -139,6 +139,7 @@ module.exports = grammar({
           choice($._electrode_section_voltage_at_time_with_parentheses),
         ),
       ),
+
     // Physics Section
     physics_section_statement: ($) =>
       seq(
@@ -386,9 +387,6 @@ module.exports = grammar({
         ")",
       ),
 
-    // parentheses: ($) => seq("(", repeat(commaSep1($._section_member)), ")"),
-    // square_brackets: ($) => seq("[", repeat(commaSep1($._section_member)), "]"),
-    // braces: ($) => seq("{", repeat(commaSep1($._section_member)), "}"),
     key_value: ($) =>
       seq(
         field("key", $.identifier),
