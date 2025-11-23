@@ -565,41 +565,46 @@
           "value": "("
         },
         {
-          "type": "FIELD",
-          "name": "args",
+          "type": "REPEAT",
           "content": {
-            "type": "REPEAT",
+            "type": "ALIAS",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "identifier"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "key_value"
-                },
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_physics_section_identifier_parentheses"
-                  },
-                  "named": true,
-                  "value": "identifier_parentheses"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "sharp_command_statement"
-                }
-              ]
-            }
+              "type": "SYMBOL",
+              "name": "_physics_section_identifier_parentheses_member"
+            },
+            "named": true,
+            "value": "identifier_parentheses_member"
           }
         },
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "_physics_section_identifier_parentheses_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "key_value"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_physics_section_identifier_parentheses"
+          },
+          "named": true,
+          "value": "identifier_parentheses"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_command_statement"
         }
       ]
     },
@@ -620,36 +625,37 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "Traps"
+          "type": "ALIAS",
+          "content": {
+            "type": "STRING",
+            "value": "Traps"
+          },
+          "named": true,
+          "value": "identifier"
         },
         {
           "type": "STRING",
           "value": "("
         },
         {
-          "type": "FIELD",
-          "name": "args",
+          "type": "REPEAT",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_physics_section_traps_member"
-                  },
-                  "named": true,
-                  "value": "traps_member"
-                },
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "sharp_command_statement"
-                }
-              ]
-            }
+                  "name": "_physics_section_traps_member"
+                },
+                "named": true,
+                "value": "traps_member"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "sharp_command_statement"
+              }
+            ]
           }
         },
         {
@@ -824,44 +830,53 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "key_value"
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_current_plot_position"
-                },
-                "named": true,
-                "value": "position"
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_current_plot_identifier_windows"
-                },
-                "named": true,
-                "value": "window"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_current_plot_identifier_parentheses"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "sharp_command_statement"
-              }
-            ]
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_current_plot_identifier_parentheses_member"
+            },
+            "named": true,
+            "value": "identifier_parentheses_member"
           }
         },
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "_current_plot_identifier_parentheses_member": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "key_value"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_current_plot_position"
+          },
+          "named": true,
+          "value": "position"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_current_plot_identifier_windows"
+          },
+          "named": true,
+          "value": "window"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_current_plot_identifier_parentheses"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sharp_command_statement"
         }
       ]
     },
@@ -1045,8 +1060,13 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_math_section_member"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_math_section_member"
+            },
+            "named": true,
+            "value": "identifier_parentheses_member"
           }
         },
         {
@@ -1073,8 +1093,13 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_math_section_member"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_math_section_member"
+            },
+            "named": true,
+            "value": "identifier_string_parentheses_member"
           }
         },
         {
@@ -1242,8 +1267,13 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_solve_section_member"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_solve_section_member"
+            },
+            "named": true,
+            "value": "identifier_parentheses_member"
           }
         },
         {
@@ -1272,8 +1302,13 @@
                 {
                   "type": "REPEAT",
                   "content": {
-                    "type": "SYMBOL",
-                    "name": "_solve_section_member"
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_solve_section_member"
+                    },
+                    "named": true,
+                    "value": "identifier_parentheses_member"
                   }
                 },
                 {
@@ -1294,8 +1329,13 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_solve_section_member"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_solve_section_member"
+            },
+            "named": true,
+            "value": "identifier_parentheses_braces_member"
           }
         },
         {
@@ -1340,7 +1380,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "_solve_section_time_member"
+            "name": "solve_section_time_member"
           }
         },
         {
@@ -1359,7 +1399,7 @@
                     "type": "REPEAT",
                     "content": {
                       "type": "SYMBOL",
-                      "name": "_solve_section_time_member"
+                      "name": "solve_section_time_member"
                     }
                   }
                 ]
@@ -1376,7 +1416,7 @@
         }
       ]
     },
-    "_solve_section_time_member": {
+    "solve_section_time_member": {
       "type": "CHOICE",
       "members": [
         {

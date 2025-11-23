@@ -165,34 +165,33 @@ module.exports = grammar({
       seq(
         $.identifier,
         "(",
-        field(
-          "args",
-          repeat(
-            choice(
-              $.identifier,
-              $.key_value,
-              alias(
-                $._physics_section_identifier_parentheses,
-                $.identifier_parentheses,
-              ),
-              $.sharp_command_statement,
-            ),
+        repeat(
+          alias(
+            $._physics_section_identifier_parentheses_member,
+            $.identifier_parentheses_member,
           ),
         ),
         ")",
       ),
+    _physics_section_identifier_parentheses_member: ($) =>
+      choice(
+        $.identifier,
+        $.key_value,
+        alias(
+          $._physics_section_identifier_parentheses,
+          $.identifier_parentheses,
+        ),
+        $.sharp_command_statement,
+      ),
     _physics_section_identifier_string: ($) => seq($.identifier, $.string),
     _physics_section_traps: ($) =>
       seq(
-        "Traps",
+        alias("Traps", $.identifier),
         "(",
-        field(
-          "args",
-          repeat(
-            choice(
-              alias($._physics_section_traps_member, $.traps_member),
-              $.sharp_command_statement,
-            ),
+        repeat(
+          choice(
+            alias($._physics_section_traps_member, $.traps_member),
+            $.sharp_command_statement,
           ),
         ),
         ")",
@@ -247,16 +246,22 @@ module.exports = grammar({
         $.identifier,
         "(",
         repeat(
-          choice(
-            $.key_value,
-            alias($._current_plot_position, $.position),
-            alias($._current_plot_identifier_windows, $.window),
-            $._current_plot_identifier_parentheses,
-            $.sharp_command_statement,
+          alias(
+            $._current_plot_identifier_parentheses_member,
+            $.identifier_parentheses_member,
           ),
         ),
         ")",
       ),
+    _current_plot_identifier_parentheses_member: ($) =>
+      choice(
+        $.key_value,
+        alias($._current_plot_position, $.position),
+        alias($._current_plot_identifier_windows, $.window),
+        $._current_plot_identifier_parentheses,
+        $.sharp_command_statement,
+      ),
+
     _current_plot_position: ($) =>
       seq("(", repeat(choice($.number, $.identifier)), ")"),
     _current_plot_identifier_windows: ($) =>
@@ -284,9 +289,22 @@ module.exports = grammar({
         $.sharp_command_statement,
       ),
     _math_section_identifier_parentheses: ($) =>
-      seq($.identifier, "(", repeat($._math_section_member), ")"),
+      seq(
+        $.identifier,
+        "(",
+        repeat(alias($._math_section_member, $.identifier_parentheses_member)),
+        ")",
+      ),
     _math_section_identifier_string_parentheses: ($) =>
-      seq($.identifier, $.string, "(", repeat($._math_section_member), ")"),
+      seq(
+        $.identifier,
+        $.string,
+        "(",
+        repeat(
+          alias($._math_section_member, $.identifier_string_parentheses_member),
+        ),
+        ")",
+      ),
     _math_section_key_value: ($) =>
       seq(
         field(
@@ -333,13 +351,31 @@ module.exports = grammar({
         $.sharp_command_statement,
       ),
     _solve_section_identifier_parentheses: ($) =>
-      seq($.identifier, "(", repeat($._solve_section_member), ")"),
+      seq(
+        $.identifier,
+        "(",
+        repeat(alias($._solve_section_member, $.identifier_parentheses_member)),
+        ")",
+      ),
     _solve_section_identifier_parentheses_braces: ($) =>
       seq(
         $.identifier,
-        optional(seq("(", repeat($._solve_section_member), ")")),
+        optional(
+          seq(
+            "(",
+            repeat(
+              alias($._solve_section_member, $.identifier_parentheses_member),
+            ),
+            ")",
+          ),
+        ),
         "{",
-        repeat($._solve_section_member),
+        repeat(
+          alias(
+            $._solve_section_member,
+            $.identifier_parentheses_braces_member,
+          ),
+        ),
         "}",
       ),
     _solve_section_key_value: ($) =>
@@ -351,11 +387,11 @@ module.exports = grammar({
     _solve_section_time_statement: ($) =>
       seq(
         "(",
-        repeat($._solve_section_time_member),
-        optional(repeat(seq(";", repeat($._solve_section_time_member)))),
+        repeat($.solve_section_time_member),
+        optional(repeat(seq(";", repeat($.solve_section_time_member)))),
         ")",
       ),
-    _solve_section_time_member: ($) =>
+    solve_section_time_member: ($) =>
       choice(
         $.number,
         $.identifier,

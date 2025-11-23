@@ -422,60 +422,17 @@
   {
     "type": "identifier_parentheses",
     "named": true,
-    "fields": {
-      "args": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "identifier_parentheses",
-            "named": true
-          },
-          {
-            "type": "key_value",
-            "named": true
-          },
-          {
-            "type": "sharp_command_statement",
-            "named": true
-          },
-          {
-            "type": "traps_member",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "identifier_parentheses",
-          "named": true
-        },
-        {
-          "type": "identifier_parentheses_braces",
-          "named": true
-        },
-        {
-          "type": "identifier_string_parentheses",
-          "named": true
-        },
-        {
-          "type": "key_value",
-          "named": true
-        },
-        {
-          "type": "position",
+          "type": "identifier_parentheses_member",
           "named": true
         },
         {
@@ -483,7 +440,7 @@
           "named": true
         },
         {
-          "type": "window",
+          "type": "traps_member",
           "named": true
         }
       ]
@@ -495,6 +452,29 @@
     "fields": {},
     "children": {
       "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses_braces_member",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses_member",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_parentheses_braces_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
       "required": true,
       "types": [
         {
@@ -515,6 +495,53 @@
         },
         {
           "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_parentheses_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses_braces",
+          "named": true
+        },
+        {
+          "type": "identifier_parentheses_member",
+          "named": true
+        },
+        {
+          "type": "identifier_string_parentheses",
+          "named": true
+        },
+        {
+          "type": "key_value",
+          "named": true
+        },
+        {
+          "type": "position",
+          "named": true
+        },
+        {
+          "type": "sharp_command_statement",
+          "named": true
+        },
+        {
+          "type": "window",
           "named": true
         }
       ]
@@ -552,6 +579,29 @@
           "named": true
         },
         {
+          "type": "identifier_string_parentheses_member",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "identifier_string_parentheses_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
           "type": "identifier_parentheses",
           "named": true
         },
@@ -565,10 +615,6 @@
         },
         {
           "type": "sharp_command_statement",
-          "named": true
-        },
-        {
-          "type": "string",
           "named": true
         }
       ]
@@ -629,19 +675,15 @@
             "named": true
           },
           {
-            "type": "key_value",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
-            "type": "string",
+            "type": "solve_section_time_member",
             "named": true
           },
           {
-            "type": "time_range",
+            "type": "string",
             "named": true
           },
           {
@@ -978,6 +1020,45 @@
         },
         {
           "type": "sharp_command_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "solve_section_time_member",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "at_angle_expression",
+          "named": true
+        },
+        {
+          "type": "at_reference",
+          "named": true
+        },
+        {
+          "type": "at_square_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "key_value",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "time_range",
           "named": true
         }
       ]
@@ -1536,10 +1617,6 @@
   },
   {
     "type": "Solve",
-    "named": false
-  },
-  {
-    "type": "Traps",
     "named": false
   },
   {
